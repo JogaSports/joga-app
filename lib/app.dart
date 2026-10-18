@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -42,6 +43,7 @@ class _JogaAppState extends State<JogaApp> {
           darkTheme: AppTheme.dark,
           themeMode: ThemeMode.dark,
           routerConfig: _router,
+          scrollBehavior: const _AppScrollBehavior(),
           // On a laptop or projector the demo shows inside a phone frame
           // with a presenter panel. On a phone it's full screen as normal.
           builder: (context, child) => PresenterFrame(
@@ -52,4 +54,20 @@ class _JogaAppState extends State<JogaApp> {
       ),
     );
   }
+}
+
+/// Lets a mouse or trackpad drag scrollable content on the web and
+/// desktop, not just touch. Without this, the welcome slides and the
+/// sideways chip rows can't be swiped in the browser demo.
+class _AppScrollBehavior extends MaterialScrollBehavior {
+  const _AppScrollBehavior();
+
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.trackpad,
+        PointerDeviceKind.stylus,
+        PointerDeviceKind.invertedStylus,
+      };
 }

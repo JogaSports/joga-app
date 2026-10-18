@@ -78,7 +78,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       ),
                     ),
                   ),
-                  _Dots(count: slides.length, index: _page),
+                  _Dots(
+                    count: slides.length,
+                    index: _page,
+                    onTap: (i) => _pages.animateToPage(
+                      i,
+                      duration: const Duration(milliseconds: 350),
+                      curve: Curves.easeOutCubic,
+                    ),
+                  ),
                   const SizedBox(height: Space.xl),
                   JogaButton(
                     label: s.getStarted,
@@ -189,25 +197,42 @@ class _SlideVisual extends StatelessWidget {
   }
 }
 
+/// Page dots. Each dot is tappable (with a 44px target), so the slides can
+/// also be changed by clicking, not only by swiping.
 class _Dots extends StatelessWidget {
-  const _Dots({required this.count, required this.index});
+  const _Dots({required this.count, required this.index, required this.onTap});
 
   final int count;
   final int index;
+  final ValueChanged<int> onTap;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         for (var i = 0; i < count; i++)
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            margin: const EdgeInsets.only(right: 6),
-            width: i == index ? 22 : 8,
-            height: 8,
-            decoration: BoxDecoration(
-              color: i == index ? AppColors.lime : AppColors.line,
-              borderRadius: BorderRadius.circular(Radii.pill),
+          Semantics(
+            button: true,
+            selected: i == index,
+            label: '${i + 1} / $count',
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => onTap(i),
+              child: SizedBox(
+                height: 44,
+                child: Center(
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    margin: const EdgeInsets.only(right: 6),
+                    width: i == index ? 22 : 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: i == index ? AppColors.lime : AppColors.line,
+                      borderRadius: BorderRadius.circular(Radii.pill),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
       ],

@@ -29,6 +29,9 @@ class StatTile extends StatelessWidget {
         border: Border.all(color: AppColors.line),
       ),
       child: Column(
+        // Size to the content, so tiles don't stretch when placed somewhere
+        // with spare height (e.g. the welcome slides).
+        mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null)
             Icon(icon, size: 26, color: valueColor ?? AppColors.lime)
