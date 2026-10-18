@@ -1,0 +1,49 @@
+name: joga_sports
+description: Joga Sports – find, book and play organised football, with stats, streaks and rewards.
+publish_to: 'none'
+version: 0.2.0+2
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  go_router: ^16.0.0
+  # Apple's official "Sign in with Apple" button now; the real sign-in
+  # call when auth is wired to Supabase.
+  # Range so pub picks the newest version your Flutter supports (8.2 needs
+  # Flutter 3.44+). The button API is the same across these versions.
+  sign_in_with_apple: '>=6.1.0 <9.0.0'
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/brand/
+
+  fonts:
+    - family: BarlowCondensed
+      fonts:
+        - asset: assets/fonts/BarlowCondensed-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/BarlowCondensed-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/BarlowCondensed-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+    - family: Barlow
+      fonts:
+        - asset: assets/fonts/Barlow-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Barlow-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Barlow-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Barlow-Bold.ttf
+          weight: 700
