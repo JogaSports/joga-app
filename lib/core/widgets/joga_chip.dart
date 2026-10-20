@@ -74,7 +74,7 @@ class JogaChip extends StatelessWidget {
               horizontal: Space.md - 1,
               vertical: Space.xs + 2,
             ),
-            // One Text.rich (not a Row) so long labels, e.g. in Welsh,
+            // One Text.rich (not a Row) so long labels
             // ellipsize when space is tight and size freely in scroll rows.
             child: Text.rich(
               TextSpan(

@@ -121,8 +121,7 @@ class _Profile extends StatelessWidget {
         ),
         const SizedBox(height: Space.xs),
         Text(
-          '${s.city(me.city)} · ${s.level(me.level)} · '
-          '${s.position(me.position)}',
+          '${s.city(me.city)} · ${s.position(me.position)}',
           style: AppText.small,
           textAlign: TextAlign.center,
         ),
@@ -224,7 +223,6 @@ class _Profile extends StatelessWidget {
             _MenuItem(
               icon: Icons.settings_rounded,
               label: s.menuSettings,
-              value: services.settings.language.nativeName,
               onTap: () => context.push(Routes.settings),
             ),
             _MenuItem(
@@ -328,8 +326,7 @@ class _Menu extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(item.icon,
-                size: 20, color: item.danger ? color : AppColors.textMuted),
+            Icon(item.icon, size: 20, color: item.danger ? color : AppColors.textMuted),
             const SizedBox(width: Space.md),
             Expanded(
               child: Text(
@@ -337,7 +334,8 @@ class _Menu extends StatelessWidget {
                 style: AppText.bodyStrong.copyWith(color: color),
               ),
             ),
-            if (item.value != null) Text(item.value!, style: AppText.small),
+            if (item.value != null)
+              Text(item.value!, style: AppText.small),
             const SizedBox(width: Space.xs),
             const Icon(
               Icons.chevron_right_rounded,

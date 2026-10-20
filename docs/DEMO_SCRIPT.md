@@ -8,21 +8,19 @@ switches off automatically.
 ## 1. First impression (1 min)
 
 - Welcome screen. Swipe the three slides.
-- Tap **CY** top right: everything switches to Welsh. Tap **EN** to go
-  back (or stay in Welsh for the rest).
 
 ## 2. Joining (2 min)
 
 - **Get started** → official Apple and Google buttons, plus email.
 - Show the email route: create account → tick 18+ and the code of
   conduct (open it) → 6-digit code (any code) → profile setup (name,
-  position, foot, level, home town) → permissions → Home.
+  position, foot, home town) → permissions → Home.
 - Or tap **Continue with Apple** to jump straight in as Ray.
 
 ## 3. Finding a game (2 min)
 
 - **Find**: switch between Cardiff, Swansea, Newport and Wrexham.
-- Quick filters: beginner, women's, walking football, Welsh-language.
+- Quick filters: beginner-friendly, women's, mixed, walking football.
 - Open a game: players list (report and block), venue access and safety
   (step-free, defibrillator, first aid), organiser, full price upfront.
 
@@ -40,10 +38,10 @@ switches off automatically.
 ## 6. Why it matters to the Welsh FA (2 min)
 
 - **Profile → Community impact**: active players, new players, returners,
-  women and girls, Welsh-language and walking football games, growth by
+  women and girls, walking football games, growth by
   town. Say clearly that the numbers are illustrative; the real ones come
   from bookings and attendance once live, and are aggregated.
-- **Settings**: language, safety (blocked players), reduce motion.
+- **Settings**: notifications, safety (blocked players), reduce motion.
 
 ## If something goes wrong
 
@@ -55,4 +53,3 @@ switches off automatically.
 
 - No Welsh FA or partner logos in the demo without written permission.
 - Don't present the impact numbers as real.
-- Get the Welsh checked by a fluent speaker before the meeting.

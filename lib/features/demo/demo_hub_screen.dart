@@ -40,9 +40,8 @@ class DemoHubScreen extends StatelessWidget {
       'Find',
       [
         _Entry('Home', Routes.home, go: true),
-        _Entry('Find games (Welsh towns, inclusive filters)', Routes.find,
+        _Entry('Find games (towns, inclusive filters)', Routes.find,
             go: true),
-        _Entry('Welsh-language game', Routes.game('g-109')),
         _Entry('Walking football', Routes.game('g-110')),
         _Entry("Women's game · Swansea", Routes.game('g-302')),
       ],
@@ -56,7 +55,8 @@ class DemoHubScreen extends StatelessWidget {
         ),
         _Entry('Checkout (5-minute hold)',
             Routes.checkout(FakeSeed.lastSpaceGameId)),
-        _Entry('Booking confirmed', Routes.confirmed(FakeSeed.lastSpaceGameId)),
+        _Entry('Booking confirmed',
+            Routes.confirmed(FakeSeed.lastSpaceGameId)),
         _Entry('Full game (waitlist)', Routes.game('g-104')),
       ],
     ),
@@ -99,7 +99,7 @@ class DemoHubScreen extends StatelessWidget {
     (
       'Trust & settings',
       [
-        _Entry('Settings · language, notifications, safety', Routes.settings),
+        _Entry('Settings · notifications, safety', Routes.settings),
         _Entry('Player code of conduct', Routes.codeOfConduct),
       ],
     ),

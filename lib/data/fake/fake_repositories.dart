@@ -108,7 +108,6 @@ class FakeAuthRepository implements AuthRepository {
       ),
       position: profile.position,
       foot: profile.foot,
-      level: profile.level,
       city: profile.city,
     );
     _db.pendingEmail = null;
@@ -126,9 +125,10 @@ class FakeGamesRepository implements GamesRepository {
   FakeGamesRepository(this._db);
   final FakeDatabase _db;
 
-  Iterable<Game> get _upcoming =>
-      _db.games.values.where((g) => g.startsAt.isAfter(_db.now)).toList()
-        ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
+  Iterable<Game> get _upcoming => _db.games.values
+      .where((g) => g.startsAt.isAfter(_db.now))
+      .toList()
+    ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
 
   @override
   Future<List<Game>> findGames(GameFilter filter) async {
@@ -149,7 +149,6 @@ class FakeGamesRepository implements GamesRepository {
         .where((g) => g.venue.city == filter.city)
         .where((g) => matchesDay(g.startsAt))
         .where((g) => filter.format == null || g.format == filter.format)
-        .where((g) => filter.level == null || g.level == filter.level)
         .where((g) => filter.tag == null || g.tags.contains(filter.tag))
         .where(
           (g) =>
@@ -166,7 +165,6 @@ class FakeGamesRepository implements GamesRepository {
     return _upcoming
         .where((g) => g.venue.city == me.city)
         .where((g) => !g.isFull && !g.hasPlayer(playerId))
-        .where((g) => g.level == me.level || g.tags.contains(GameTag.casual))
         .take(3)
         .toList();
   }
@@ -490,8 +488,7 @@ class FakeMatchRepository implements MatchRepository {
     }
     if (r.potm) {
       rewards.add(
-        const Reward(
-            title: 'Player of the match', subtitle: 'Picked by the organiser'),
+        const Reward(title: 'Player of the match', subtitle: 'Picked by the organiser'),
       );
     }
 
@@ -576,8 +573,7 @@ class FakeCompeteRepository implements CompeteRepository {
       // Put Ray in 8th so the "you" row is visible.
       final myValue = switch (metric) {
         LeaderboardMetric.goals => _db.counters[StatsPeriod.month]!.goals + 1,
-        LeaderboardMetric.assists =>
-          _db.counters[StatsPeriod.month]!.assists + 2,
+        LeaderboardMetric.assists => _db.counters[StatsPeriod.month]!.assists + 2,
         LeaderboardMetric.potm => _db.counters[StatsPeriod.month]!.potm,
         LeaderboardMetric.streak => _db.streakWeeks,
       };
@@ -585,8 +581,7 @@ class FakeCompeteRepository implements CompeteRepository {
         entries.add(_entry(i + 1, pool[i], base[i]));
       }
       entries.add(
-        LeaderboardEntry(
-            position: 8, person: _db.me.person, value: myValue, isMe: true),
+        LeaderboardEntry(position: 8, person: _db.me.person, value: myValue, isMe: true),
       );
       for (var i = 7; i < 10; i++) {
         entries.add(_entry(i + 2, pool[i], base[i + 1]));
@@ -618,8 +613,7 @@ class FakeCompeteRepository implements CompeteRepository {
   }
 
   LeaderboardEntry _entry(int position, Person person, int value) =>
-      LeaderboardEntry(
-          position: position, person: person, value: value, isMe: false);
+      LeaderboardEntry(position: position, person: person, value: value, isMe: false);
 
   static String _monthName(int month) => const [
         'January',
@@ -776,7 +770,6 @@ class FakeImpactRepository implements ImpactRepository {
       womenPercent: period == ImpactPeriod.month ? 23 : 19,
       womensGames: n(34),
       walkingGames: n(18),
-      welshLanguageGames: n(12),
       averageFillPercent: 87,
       monthlyActive: [
         for (var i = 0; i < months.length; i++) (months[i], active[i]),
@@ -814,12 +807,10 @@ class FakeImpactRepository implements ImpactRepository {
         ),
       ],
       sessions: const [
-        SessionShare(type: SessionType.open, percent: 48),
-        SessionShare(type: SessionType.womens, percent: 16),
-        SessionShare(type: SessionType.beginner, percent: 14),
-        SessionShare(type: SessionType.over30s, percent: 9),
-        SessionShare(type: SessionType.walking, percent: 8),
-        SessionShare(type: SessionType.welshLanguage, percent: 5),
+        SessionShare(type: SessionType.open, percent: 52),
+        SessionShare(type: SessionType.womens, percent: 18),
+        SessionShare(type: SessionType.beginner, percent: 18),
+        SessionShare(type: SessionType.walking, percent: 12),
       ],
     );
   }

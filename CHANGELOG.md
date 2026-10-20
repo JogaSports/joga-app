@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.2.2 – English only, fixes
+
+- Removed Welsh completely (language switch, translations, review doc).
+  All copy stays in one place, `core/l10n/strings_en.dart`
+- Welcome slides no longer overflow on short or narrow screens
+- Community impact: monthly chart no longer overflows; labels scale down
+- Presenter panel jump-to buttons sign in or out as needed, so they go
+  straight to the screen instead of bouncing via the sign-in guard
+- Demo data loads faster (shorter simulated delay)
+
+## 0.2.1 – Recreational focus
+
+- Removed ability levels (beginner / intermediate / competitive): Joga is
+  recreational football. "Beginner-friendly" is now a game tag
+- Removed the Competitive, Over-30s and Welsh-speaking tags
+- Deeper stats (city rank, best venue, rates) are free for everyone; Joga+
+  is no booking fees, streak freeze and bigger rewards
+- Profile setup no longer asks for ability level
+
 ## 0.2.0 – Welsh FA demo polish
 
 - Sign-up and sign-in journey: welcome slides, Apple and Google buttons

@@ -37,7 +37,6 @@ void main() {
         lastName: 'Jones',
         position: PlayerPosition.striker,
         foot: PreferredFoot.left,
-        level: SkillLevel.beginner,
         city: City.swansea,
       ),
     );

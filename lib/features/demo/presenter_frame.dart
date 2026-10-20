@@ -8,13 +8,14 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/theme/app_text.dart';
 import '../../core/widgets/widgets.dart';
+import '../../data/models/models.dart';
 
 /// Wraps the whole app.
 ///
 /// On a phone it does nothing (apart from honouring "Reduce motion"). On a
 /// laptop or projector it shows the app inside an iPhone-sized frame, with
-/// a presenter panel beside it: language switch, jump-to shortcuts and a
-/// reset, so a live demo never gets stuck.
+/// a presenter panel beside it: jump-to shortcuts and a reset, so a live
+/// demo never gets stuck.
 ///
 /// Demo only. In the real app, return [child] (keep the reduce-motion
 /// part).
@@ -100,6 +101,28 @@ class PresenterFrame extends StatelessWidget {
       },
     );
   }
+}
+
+/// Jumps straight to [path] from the presenter panel.
+///
+/// The sign-in guard would otherwise bounce the jump: app screens redirect
+/// to Welcome when signed out, and Welcome redirects to Home when signed
+/// in. So this signs in as Ray for app screens, and
+/// signs out for Welcome, before navigating.
+Future<void> presenterJump(
+  BuildContext context,
+  GoRouter router,
+  String path,
+) async {
+  final auth = context.services.auth;
+  final wantsSignedOut = Routes.signedOutOnly.contains(path);
+  final open = Routes.open.contains(path);
+  if (wantsSignedOut && auth.status != AuthStatus.signedOut) {
+    await auth.signOut();
+  } else if (!wantsSignedOut && !open && !auth.isSignedIn) {
+    await auth.signInWithApple();
+  }
+  router.go(path);
 }
 
 /// iPhone-style frame with a status bar and dynamic island.
@@ -262,17 +285,13 @@ class _PresenterPanel extends StatelessWidget {
             const SizedBox(height: Space.sm),
             Text(s.presenterHint, style: AppText.small),
             const SizedBox(height: Space.xl),
-            Text(s.language.toUpperCase(), style: AppText.label),
-            const SizedBox(height: Space.sm),
-            const LanguageToggle(),
-            const SizedBox(height: Space.xl),
             Text(s.jumpTo.toUpperCase(), style: AppText.label),
             const SizedBox(height: Space.xs),
             for (final (icon, label, path) in shortcuts)
               _PanelLink(
                 icon: icon,
                 label: label,
-                onTap: () => router.go(path),
+                onTap: () => presenterJump(context, router, path),
               ),
             const Spacer(),
             if (services.resetDemo != null)
@@ -350,8 +369,6 @@ class _CompactTools extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const LanguageToggle(),
-          const SizedBox(height: Space.sm),
           if (services.resetDemo != null)
             // No tooltips here: this sits outside the app's Navigator,
             // where there's no Overlay to show them in.
@@ -368,7 +385,7 @@ class _CompactTools extends StatelessWidget {
           Semantics(
             label: s.allScreens,
             child: IconButton.filledTonal(
-              onPressed: () => router.go(Routes.demo),
+              onPressed: () => presenterJump(context, router, Routes.demo),
               icon: const Icon(Icons.grid_view_rounded),
             ),
           ),

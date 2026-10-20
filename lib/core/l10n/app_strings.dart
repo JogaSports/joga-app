@@ -3,12 +3,12 @@ import '../settings/app_settings.dart';
 
 /// Every piece of text in the translated screens.
 ///
-/// English ([EnStrings]) is the default and Welsh ([CyStrings]) the second
-/// language. Both extend this class, so the app won't compile if a Welsh
-/// string is missing. Add a string here first, then to both languages.
+/// English ([EnStrings]). Add a string here first, then in
+/// `strings_en.dart`; the app won't compile until both have it.
 ///
-/// Later this can move to ARB files and `flutter gen-l10n` if we add more
-/// languages; the screens won't change because they only call `context.s`.
+/// If more languages are needed later, this can move to ARB files and
+/// `flutter gen-l10n`; screens won't change because they only call
+/// `context.s`.
 abstract class AppStrings {
   const AppStrings();
 
@@ -25,8 +25,6 @@ abstract class AppStrings {
   String get demoData;
   String comingWithRealApp(String what);
 
-  String get language;
-  String get languageHelp;
 
   // Dates -------------------------------------------------------------------
   List<String> get weekdaysShort;
@@ -98,7 +96,6 @@ abstract class AppStrings {
   String get nameRequired;
   String get positionLabel;
   String get footLabel;
-  String get levelLabel;
   String get homeCity;
   String stepOf(int step, int total);
 
@@ -143,7 +140,6 @@ abstract class AppStrings {
   String playBySunday(int weeks);
   String weeksToReward(int weeks, String reward);
   String get forYou;
-  String get reasonYourLevel;
   String get reasonNearYou;
   String get noGamesNearYou;
   String get noGamesNearYouBody;
@@ -275,7 +271,6 @@ abstract class AppStrings {
   String get bestVenue;
   String get involvementsPerGame;
   String get potmRate;
-  String unlockWith(String name);
   String cityTableRank(String city, int rank);
 
   // Profile -----------------------------------------------------------------
@@ -335,7 +330,6 @@ abstract class AppStrings {
   String get women;
   String womenHelp(int games);
   String get walkingGames;
-  String get welshGames;
   String get averageFill;
   String get monthlyActiveTitle;
   String get byTown;
@@ -357,7 +351,6 @@ abstract class AppStrings {
 
   // Enum labels -------------------------------------------------------------
   String city(City city);
-  String level(SkillLevel level);
   String format(GameFormat format);
   String tag(GameTag tag);
   String day(DayFilter day);
@@ -369,7 +362,7 @@ abstract class AppStrings {
   String role(UserRole role);
   String period(StatsPeriod period);
 
-  // Helpers built on the strings above (shared by both languages) ----------
+  // Helpers built on the strings above ----------------------------------------
 
   /// Tue
   String weekday(DateTime d) => weekdaysShort[d.weekday - 1];

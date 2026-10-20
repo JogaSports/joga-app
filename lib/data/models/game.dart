@@ -11,7 +11,6 @@ class Game {
     required this.pitch,
     required this.startsAt,
     required this.duration,
-    required this.level,
     required this.tags,
     required this.pricePence,
     required this.players,
@@ -25,7 +24,6 @@ class Game {
   final String pitch;
   final DateTime startsAt;
   final Duration duration;
-  final SkillLevel level;
   final List<GameTag> tags;
   final int pricePence;
   final List<Person> players;
@@ -50,7 +48,6 @@ class Game {
         pitch: pitch,
         startsAt: startsAt,
         duration: duration,
-        level: level,
         tags: tags,
         pricePence: pricePence,
         players: players ?? this.players,
@@ -65,7 +62,6 @@ class GameFilter {
     this.city = City.cardiff,
     this.day = DayFilter.all,
     this.format,
-    this.level,
     this.tag,
     this.maxPricePence,
   });
@@ -73,7 +69,6 @@ class GameFilter {
   final City city;
   final DayFilter day;
   final GameFormat? format;
-  final SkillLevel? level;
   final GameTag? tag;
   final int? maxPricePence;
 
@@ -81,7 +76,6 @@ class GameFilter {
     City? city,
     DayFilter? day,
     GameFormat? Function()? format,
-    SkillLevel? Function()? level,
     GameTag? Function()? tag,
     int? Function()? maxPricePence,
   }) =>
@@ -89,7 +83,6 @@ class GameFilter {
         city: city ?? this.city,
         day: day ?? this.day,
         format: format != null ? format() : this.format,
-        level: level != null ? level() : this.level,
         tag: tag != null ? tag() : this.tag,
         maxPricePence:
             maxPricePence != null ? maxPricePence() : this.maxPricePence,

@@ -11,13 +11,15 @@ Agreed before the build. Change here first, then in code.
 | Player ratings | **None for now.** Post-game feedback is about the game and organiser, not players | `post_game_screen.dart` |
 | Leaderboards, referrals, waitlist | Built, **switched on after the test period** | `FeatureFlags` |
 | Admin | **Desktop web first**, with a phone layout for today's games | `admin_screen.dart` |
-| Joga+ benefits | No booking fees, full stats, streak freeze, double milestone rewards, early access | `FakeSeed.membershipBenefits` |
+| Joga+ benefits | No booking fees, streak freeze, double milestone rewards, early access. **Stats are free for everyone** | `FakeSeed.membershipBenefits` |
+| Levels | **None**: Joga is recreational football. Games can be tagged Beginner-friendly | `GameTag` |
+| Game tags | Beginner-friendly, Women's, Mixed, Walking football, Casual | `GameTag` |
 | Booking fee | £1 per booking, free for Joga+ | `AppConfig.bookingFeePence` |
 | Space hold | 5 minutes while paying | `AppConfig.spaceHold` |
 | Cancellation | Free up to 24h before. After that, refunded only if the space is filled | `AppConfig.freeCancellation` |
 | Photos | Placeholder pitch graphics until venue photos exist | `PitchPhoto` |
 | Demo towns | Demo data covers Cardiff, Swansea, Newport and Wrexham, plus Bristol (marked as outside Wales). Launch towns still to confirm | `City`, `FakeSeed` |
-| Languages | **English by default, Welsh second**. Welsh uses the "chi" form and must be checked by a fluent speaker | `core/l10n/` |
+| Language | **English only.** All copy in `core/l10n/strings_en.dart` | `core/l10n/` |
 | Sign-in | Apple, Google and email. Apple shown first (App Store rule) | `features/auth/` |
 | Age | **18+ only** for now, confirmed at sign-up | `email_auth_screen.dart` |
 | Conduct | Every player agrees to the code of conduct at sign-up; report and block on every player | `features/safety/` |

@@ -37,24 +37,15 @@ enum GameFormat {
   final int capacity;
 }
 
-enum SkillLevel {
-  beginner('Beginner'),
-  intermediate('Intermediate'),
-  competitive('Competitive');
-
-  const SkillLevel(this.label);
-  final String label;
-}
-
-/// Tags that help players find the right game.
+/// Tags that help players find the right game. Joga is recreational
+/// football, so there are no ability levels; "Beginner-friendly" marks
+/// games that suit people new to playing or coming back to it.
 enum GameTag {
-  casual('Casual'),
-  competitive('Competitive'),
-  mixed('Mixed'),
-  over30s('Over-30s'),
+  beginner('Beginner-friendly'),
   womens("Women's"),
+  mixed('Mixed'),
   walking('Walking football'),
-  welshSpeaking('Welsh-speaking');
+  casual('Casual');
 
   const GameTag(this.label);
   final String label;

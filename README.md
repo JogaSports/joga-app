@@ -5,7 +5,7 @@ Starting in Cardiff and Bristol, with the demo also showing Swansea, Newport
 and Wrexham. Football first; padel, badminton and other sports later.
 
 This repo is the **demo**: every screen of the MVP, a full sign-up and
-sign-in journey, English and Welsh, and a community impact dashboard, all
+sign-in journey and a community impact dashboard, all
 running on dummy data for a player called **Ray**. There is no real backend,
 login or payment yet. The architecture is set up so real services slot in
 behind the same interfaces without touching the screens.
@@ -38,24 +38,24 @@ On Windows, run the commands in `tool/setup.sh` one by one.
 
 See `docs/DEMO_SCRIPT.md` for a 10-minute script for presenting.
 
-1. **Welcome**: three slides, EN | CY switch top right.
+1. **Welcome**: three slides (swipe, drag or tap the dots).
 2. **Get started** → Continue with Apple / Google (signs straight in as
    Ray), or **Continue with email** → create account → 6-digit code (any
    code) → profile setup → permissions → Home.
-3. **Find**: Welsh towns, plus quick filters for beginner, women's,
-   walking football and Welsh-language games.
+3. **Find**: towns across Wales, plus quick filters for beginner-friendly,
+   women's, mixed and walking football games.
 4. **Game details** → see players (report and block), access and safety
    (step-free, defibrillator, first aid) → **Join game** → 5-minute hold →
    **Pay** → confirmation with confetti.
 5. **My games** → tonight's game → Match control → submit a result →
    post-game, stats, streak and wallet update everywhere.
 6. **Profile → Community impact**: participation by town, women and girls,
-   returners, retention, Welsh-language and walking football games.
-7. **Profile → Settings**: language, notifications, blocked players,
+   returners, retention and walking football games.
+7. **Profile → Settings**: notifications, blocked players,
    reduce motion, demo reset.
 
 On a laptop or projector the app shows inside a phone frame with a
-**presenter panel** (language, jump-to shortcuts, reset demo). Turn the
+**presenter panel** (jump-to shortcuts, reset demo). Turn the
 frame off in the panel or in Settings.
 
 Error states on purpose: sign in with the password `wrong-password`, sign
@@ -66,13 +66,13 @@ up with an email containing `taken`, or enter the code `000000`.
 ```
 lib/
   main.dart                 Entry point. Picks demo or real services.
-  app.dart                  Root widget: services, language, theme, router.
+  app.dart                  Root widget: services, theme, router.
   core/
     config/                 App constants, feature flags
     di/                     AppServices (all repositories) + AppScope
-    l10n/                   English and Welsh strings (context.s)
+    l10n/                   All app copy in one place (context.s)
     router/                 Routes (paths) + GoRouter with the sign-in guard
-    settings/               Language, notifications, accessibility
+    settings/               Notifications, accessibility, demo frame
     theme/                  Colours, spacing, type scale, Material theme
     utils/                  Formatters (money, counts, dates, countdowns)
     widgets/                Shared UI kit (buttons, cards, chips, sign-in
@@ -88,7 +88,7 @@ lib/
 assets/brand/               Google "G" mark, app icon (1024px)
 web/                        index.html with branded splash, icons, manifest
 test/                       Unit and widget tests
-docs/                       Screens, decisions, backend plan, Welsh, demo
+docs/                       Screens, decisions, backend plan, demo
 ```
 
 ## Architecture in one minute
@@ -100,7 +100,7 @@ Screen (features/)  →  AppServices (core/di)  →  Repository interface (data/
 ```
 
 - Screens never import `data/fake`. They call `context.services.<repo>`.
-- Text comes from `context.s` (English or Welsh). Never hard-code text in
+- Text comes from `context.s` (`core/l10n/strings_en.dart`). Never hard-code text in
   a translated screen.
 - The router's redirect follows `AuthRepository.status`: signed out,
   waiting for email code, needs profile, signed in.
@@ -129,8 +129,7 @@ Screen (features/)  →  AppServices (core/di)  →  Repository interface (data/
    `Supabase…Repository` classes for the interfaces in
    `data/repositories/`.
 2. Add `AppServices.supabase()` and switch to it in `main.dart`.
-3. Save settings with `shared_preferences`, and the language on the
-   player's profile so emails and push notifications match.
+3. Save settings with `shared_preferences`.
 4. Turn the "after test" features off in `core/config/feature_flags.dart`.
 5. Remove the presenter frame (return `child` in `PresenterFrame`),
    `features/demo/`, and the demo tools in Profile and Settings.
@@ -142,7 +141,7 @@ Screen (features/)  →  AppServices (core/di)  →  Repository interface (data/
 - One screen per file; screen-only widgets stay private in the same file.
 - Colours, spacing and text styles only from `core/theme`.
 - Text only from `context.s`; add new strings to `app_strings.dart`, then
-  English and Welsh (it won't compile until both have it).
+  `strings_en.dart` (it won't compile until both have it).
 - Routes only via `Routes.*`, never hard-coded strings.
 - Product names and prices only from `AppConfig`.
 - Run `dart format lib test` and `flutter analyze` before committing.
@@ -152,5 +151,4 @@ Screen (features/)  →  AppServices (core/di)  →  Repository interface (data/
 - `docs/SCREENS.md`: every screen, its route and file
 - `docs/DECISIONS.md`: product decisions agreed so far
 - `docs/BACKEND_PLAN.md`: backend repo, tables and how each repository maps
-- `docs/WELSH.md`: how the Welsh translation works and gets reviewed
 - `docs/DEMO_SCRIPT.md`: presenting the demo

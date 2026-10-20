@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/config/app_config.dart';
 import '../../core/config/feature_flags.dart';
 import '../../core/di/app_scope.dart';
 import '../../core/di/app_services.dart';
@@ -17,7 +16,8 @@ import 'widgets/streak_calendar.dart';
 
 typedef _StatsData = ({PlayerStats stats, Streak streak, Player me});
 
-/// Your football: totals by period, form, streak and Joga+ stats.
+/// Your football: totals by period, form, streak and deeper stats. All
+/// stats are free; Joga+ is about booking fees and rewards.
 class StatsScreen extends StatefulWidget {
   const StatsScreen({super.key});
 
@@ -101,14 +101,8 @@ class _StatsScreenState extends State<StatsScreen> {
                   ],
                 ),
               ),
-              SectionLabel(
-                s.deeperStats,
-                trailing: const JogaChip(
-                  label: AppConfig.membershipName,
-                  tone: ChipTone.selected,
-                ),
-              ),
-              _MemberStats(stats: data.stats, unlocked: data.me.isMember),
+              SectionLabel(s.deeperStats),
+              _DeeperStats(stats: data.stats),
               if (FeatureFlags.leaderboards) ...[
                 const SizedBox(height: Space.md),
                 JogaCard(
@@ -178,16 +172,16 @@ class _Totals extends StatelessWidget {
   }
 }
 
-class _MemberStats extends StatelessWidget {
-  const _MemberStats({required this.stats, required this.unlocked});
+/// City rank, best venue and rates. Free for every player.
+class _DeeperStats extends StatelessWidget {
+  const _DeeperStats({required this.stats});
 
   final PlayerStats stats;
-  final bool unlocked;
 
   @override
   Widget build(BuildContext context) {
     final s = context.s;
-    final content = JogaCard(
+    return JogaCard(
       child: Column(
         children: [
           PriceRow(label: s.cityRank, value: '#${stats.cityRank}'),
@@ -203,38 +197,9 @@ class _MemberStats extends StatelessWidget {
         ],
       ),
     );
-    if (unlocked) return content;
-
-    return Stack(
-      children: [
-        content,
-        Positioned.fill(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(Radii.md),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    AppColors.background.withValues(alpha: 0.55),
-                    AppColors.background.withValues(alpha: 0.95),
-                  ],
-                ),
-              ),
-              child: Center(
-                child: JogaButton(
-                  label: s.unlockWith(AppConfig.membershipName),
-                  icon: Icons.lock_rounded,
-                  expand: false,
-                  onPressed: () => context.push(Routes.membership),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
   }
 
-  String _potmRate() =>
-      stats.games == 0 ? '0%' : '${(stats.potm / stats.games * 100).round()}%';
+  String _potmRate() => stats.games == 0
+      ? '0%'
+      : '${(stats.potm / stats.games * 100).round()}%';
 }

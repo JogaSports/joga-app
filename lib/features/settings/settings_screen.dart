@@ -11,7 +11,7 @@ import '../../core/theme/app_text.dart';
 import '../../core/widgets/widgets.dart';
 import '../../data/models/models.dart';
 
-/// Language, notifications, privacy and safety, accessibility.
+/// Notifications, privacy and safety, accessibility.
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -27,20 +27,6 @@ class SettingsScreen extends StatelessWidget {
           showBack: true,
           children: [
             Headline(s.settingsTitle),
-
-            // Language ------------------------------------------------------
-            SectionLabel(s.language),
-            _Group(
-              children: [
-                for (final language in AppLanguage.values)
-                  _Row(
-                    title: language.nativeName,
-                    selected: settings.language == language,
-                    onTap: () => settings.language = language,
-                  ),
-              ],
-            ),
-            Text(s.languageHelp, style: AppText.tiny),
 
             // Notifications -------------------------------------------------
             SectionLabel(s.notificationsSection),
@@ -257,7 +243,8 @@ class _SwitchRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(title, style: AppText.bodyStrong),
-                    if (subtitle != null) Text(subtitle!, style: AppText.small),
+                    if (subtitle != null)
+                      Text(subtitle!, style: AppText.small),
                   ],
                 ),
               ),

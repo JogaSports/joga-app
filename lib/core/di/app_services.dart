@@ -40,7 +40,7 @@ class AppServices {
 
   /// Demo mode: everything runs in memory with dummy data for Ray.
   factory AppServices.fake({
-    Duration latency = const Duration(milliseconds: 250),
+    Duration latency = const Duration(milliseconds: 120),
   }) {
     final db = FakeDatabase(latency: latency);
     final settings = AppSettings();

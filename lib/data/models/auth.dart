@@ -41,7 +41,6 @@ class ProfileSetup {
     required this.lastName,
     required this.position,
     required this.foot,
-    required this.level,
     required this.city,
   });
 
@@ -49,6 +48,5 @@ class ProfileSetup {
   final String lastName;
   final PlayerPosition position;
   final PreferredFoot foot;
-  final SkillLevel level;
   final City city;
 }

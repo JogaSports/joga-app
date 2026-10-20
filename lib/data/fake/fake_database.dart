@@ -10,7 +10,7 @@ import 'fake_seed.dart';
 /// by Supabase in the real app; nothing outside `data/fake` knows it exists.
 class FakeDatabase extends ChangeNotifier {
   FakeDatabase({
-    this.latency = const Duration(milliseconds: 250),
+    this.latency = const Duration(milliseconds: 120),
     DateTime? now,
   }) : seededAt = now ?? DateTime.now() {
     _seed();

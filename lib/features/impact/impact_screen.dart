@@ -161,10 +161,6 @@ class _Dashboard extends StatelessWidget {
                 label: s.walkingGames,
                 value: Format.count(data.walkingGames),
               ),
-              PriceRow(
-                label: s.welshGames,
-                value: Format.count(data.welshLanguageGames),
-              ),
             ],
           ),
         ),
@@ -229,8 +225,7 @@ class _DemoBanner extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.info_outline_rounded,
-              size: 18, color: AppColors.fire),
+          const Icon(Icons.info_outline_rounded, size: 18, color: AppColors.fire),
           const SizedBox(width: Space.sm),
           Expanded(child: Text(text, style: AppText.smallStrong)),
         ],
@@ -277,15 +272,20 @@ class _Kpi extends StatelessWidget {
 }
 
 /// Single-series column chart: active players per month. The current
-/// month is full lime; earlier months are a lighter step of the same hue.
+/// month is full lime; earlier months are a darker step of the same hue.
 /// Hover (web) or long-press (phone) shows the exact value.
+///
+/// Every part has a fixed slot (value label, bar area, month label), and
+/// labels scale down rather than wrap, so it can't overflow at any width.
 class _MonthlyBars extends StatelessWidget {
   const _MonthlyBars({required this.months, required this.monthNames});
 
   final List<(int, int)> months;
   final List<String> monthNames;
 
-  static const _height = 140.0;
+  static const _barArea = 140.0;
+  static const _valueSlot = 20.0;
+  static const _gap = 4.0;
 
   @override
   Widget build(BuildContext context) {
@@ -299,7 +299,7 @@ class _MonthlyBars extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: _height + 20,
+              height: _valueSlot + _gap + _barArea,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -309,18 +309,26 @@ class _MonthlyBars extends StatelessWidget {
                         message: '${monthNames[months[i].$1 - 1]}: '
                             '${Format.count(months[i].$2)}',
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              if (i == months.length - 1)
-                                Text(
-                                  Format.count(months[i].$2),
-                                  style: AppText.smallStrong,
-                                ),
-                              const SizedBox(height: Space.xs),
+                              SizedBox(
+                                height: _valueSlot,
+                                child: i == months.length - 1
+                                    ? FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text(
+                                          Format.count(months[i].$2),
+                                          maxLines: 1,
+                                          style: AppText.smallStrong,
+                                        ),
+                                      )
+                                    : null,
+                              ),
+                              const SizedBox(height: _gap),
                               Container(
-                                height: _height * months[i].$2 / peak,
+                                height: _barArea * months[i].$2 / peak,
                                 decoration: BoxDecoration(
                                   color: i == months.length - 1
                                       ? AppColors.lime
@@ -344,10 +352,13 @@ class _MonthlyBars extends StatelessWidget {
               children: [
                 for (final (month, _) in months)
                   Expanded(
-                    child: Text(
-                      monthNames[month - 1],
-                      style: AppText.tiny,
-                      textAlign: TextAlign.center,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        monthNames[month - 1],
+                        maxLines: 1,
+                        style: AppText.tiny,
+                      ),
                     ),
                   ),
               ],
@@ -374,8 +385,7 @@ class _RateRow extends StatelessWidget {
         Row(
           children: [
             Expanded(child: Text(label, style: AppText.bodyStrong)),
-            Text('$percent%',
-                style: AppText.h3.copyWith(color: AppColors.lime)),
+            Text('$percent%', style: AppText.h3.copyWith(color: AppColors.lime)),
           ],
         ),
         const SizedBox(height: Space.xs),
@@ -403,7 +413,13 @@ class _TownRow extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(s.city(town.city), style: AppText.bodyStrong),
+            Flexible(
+              child: Text(
+                s.city(town.city),
+                style: AppText.bodyStrong,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
             if (!town.city.inWales) ...[
               const SizedBox(width: Space.sm),
               JogaChip(label: s.pilot, tone: ChipTone.muted),

@@ -25,7 +25,7 @@ void main() {
     );
   });
 
-  test('every Welsh town has games to book', () async {
+  test('every town in Wales has games to book', () async {
     for (final city in City.values.where((c) => c.inWales)) {
       final games = await services.games.findGames(GameFilter(city: city));
       expect(games, isNotEmpty, reason: city.label);
@@ -33,11 +33,7 @@ void main() {
   });
 
   test('inclusive filters find games', () async {
-    for (final tag in [
-      GameTag.womens,
-      GameTag.walking,
-      GameTag.welshSpeaking
-    ]) {
+    for (final tag in [GameTag.beginner, GameTag.womens, GameTag.walking]) {
       final found = <Game>[];
       for (final city in City.values) {
         found.addAll(

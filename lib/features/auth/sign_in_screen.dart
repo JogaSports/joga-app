@@ -52,7 +52,6 @@ class _SignInScreenState extends State<SignInScreen> {
 
     return JogaScaffold(
       showBack: true,
-      actions: const [LanguageToggle(), SizedBox(width: Space.sm)],
       children: [
         const SizedBox(height: Space.md),
         Headline(signUp ? s.createAccountTitle : s.signInTitle),

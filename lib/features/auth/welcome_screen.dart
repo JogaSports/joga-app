@@ -10,8 +10,7 @@ import '../../core/widgets/widgets.dart';
 import '../../data/models/models.dart';
 
 /// First screen: three swipeable slides explaining Joga, then sign up or
-/// sign in. The language switch is here so Welsh speakers can change it
-/// before anything else.
+/// sign in.
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
 
@@ -59,12 +58,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: Space.md),
-                  const Row(
-                    children: [
-                      JogaLogo(size: 26),
-                      Spacer(),
-                      LanguageToggle(),
-                    ],
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: JogaLogo(size: 26),
                   ),
                   Expanded(
                     child: PageView.builder(
@@ -118,21 +114,41 @@ class _Slide extends StatelessWidget {
   final String title;
   final String body;
 
+  /// Below this height the illustration is dropped and the title shrinks,
+  /// so small or landscape screens never overflow.
+  static const _compactHeight = 420.0;
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Flexible(child: Center(child: _SlideVisual(index: index))),
-        const SizedBox(height: Space.lg),
-        Text(title.toUpperCase(), style: AppText.hero.copyWith(fontSize: 50)),
-        const SizedBox(height: Space.md),
-        Text(
-          body,
-          style: AppText.body.copyWith(color: AppColors.textSecondary),
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (context, box) {
+        final compact = box.maxHeight < _compactHeight;
+        // Scrolls only if the content still doesn't fit.
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: box.maxHeight),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                if (!compact) ...[
+                  Center(child: _SlideVisual(index: index)),
+                  const SizedBox(height: Space.xl),
+                ],
+                Text(
+                  title.toUpperCase(),
+                  style: AppText.hero.copyWith(fontSize: compact ? 38 : 50),
+                ),
+                const SizedBox(height: Space.md),
+                Text(
+                  body,
+                  style: AppText.body.copyWith(color: AppColors.textSecondary),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

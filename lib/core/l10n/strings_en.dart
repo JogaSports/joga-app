@@ -3,7 +3,7 @@ import '../config/app_config.dart';
 import '../settings/app_settings.dart';
 import 'app_strings.dart';
 
-/// English (default).
+/// All app copy, in English.
 class EnStrings extends AppStrings {
   const EnStrings();
 
@@ -34,10 +34,6 @@ class EnStrings extends AppStrings {
   @override
   String comingWithRealApp(String what) => '$what comes with the real app.';
 
-  @override
-  String get language => 'Language';
-  @override
-  String get languageHelp => 'Choose the language for the app.';
 
   // Dates -------------------------------------------------------------------
   @override
@@ -183,7 +179,8 @@ class EnStrings extends AppStrings {
   @override
   String get checkInboxTitle => 'Check your\ninbox';
   @override
-  String checkInboxBody(String email) => "We've sent a reset link to $email.";
+  String checkInboxBody(String email) =>
+      "We've sent a reset link to $email.";
   @override
   String get backToSignIn => 'Back to sign in';
 
@@ -220,8 +217,6 @@ class EnStrings extends AppStrings {
   String get positionLabel => 'Position';
   @override
   String get footLabel => 'Preferred foot';
-  @override
-  String get levelLabel => 'Ability level';
   @override
   String get homeCity => 'Home town or city';
   @override
@@ -308,8 +303,6 @@ class EnStrings extends AppStrings {
   @override
   String get forYou => 'For you';
   @override
-  String get reasonYourLevel => 'Your level';
-  @override
   String get reasonNearYou => 'Near you';
   @override
   String get noGamesNearYou => 'No new games near you right now';
@@ -320,7 +313,7 @@ class EnStrings extends AppStrings {
   String get membershipPromoTitle => '$_plus · no booking fees';
   @override
   String membershipPromoBody(String price) =>
-      '$price a month. Full stats and bigger rewards.';
+      '$price a month. No booking fees and bigger rewards.';
 
   // Find --------------------------------------------------------------------
   @override
@@ -513,7 +506,8 @@ class EnStrings extends AppStrings {
   @override
   String get spotLocked => 'Your spot\nis locked!';
   @override
-  String get streakSafeBooked => 'Another game this week. Your streak is safe.';
+  String get streakSafeBooked =>
+      'Another game this week. Your streak is safe.';
   @override
   String streakKeepsAlive(int weeks) =>
       'This game keeps your $weeks-week streak alive.';
@@ -607,8 +601,6 @@ class EnStrings extends AppStrings {
   String get involvementsPerGame => 'Goal involvements / game';
   @override
   String get potmRate => 'POTM rate';
-  @override
-  String unlockWith(String name) => 'Unlock with $name';
   @override
   String cityTableRank(String city, int rank) =>
       "$city table · you're #$rank this month";
@@ -741,8 +733,6 @@ class EnStrings extends AppStrings {
   @override
   String get walkingGames => 'Walking football sessions';
   @override
-  String get welshGames => 'Welsh-language games';
-  @override
   String get averageFill => 'Average game fill';
   @override
   String get monthlyActiveTitle => 'Active players by month';
@@ -762,9 +752,7 @@ class EnStrings extends AppStrings {
         SessionType.open => 'Mixed / open',
         SessionType.womens => "Women's",
         SessionType.beginner => 'Beginner-friendly',
-        SessionType.over30s => 'Over-30s',
         SessionType.walking => 'Walking football',
-        SessionType.welshLanguage => 'Welsh-language',
       };
   @override
   String get exportReport => 'Export report';
@@ -791,8 +779,6 @@ class EnStrings extends AppStrings {
   // Enum labels -------------------------------------------------------------
   @override
   String city(City city) => city.label;
-  @override
-  String level(SkillLevel level) => level.label;
   @override
   String format(GameFormat format) => format.label;
   @override

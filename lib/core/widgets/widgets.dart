@@ -12,7 +12,6 @@ export 'joga_card.dart';
 export 'joga_chip.dart';
 export 'joga_logo.dart';
 export 'joga_scaffold.dart';
-export 'language_toggle.dart';
 export 'pitch_photo.dart';
 export 'price_row.dart';
 export 'progress_bar.dart';

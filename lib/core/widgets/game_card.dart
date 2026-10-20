@@ -161,7 +161,7 @@ class GameListTile extends StatelessWidget {
                   style: AppText.smallStrong,
                 ),
                 Text(
-                  '${game.venue.name} · ${s.level(game.level)}',
+                  game.venue.name,
                   style: AppText.small,
                   overflow: TextOverflow.ellipsis,
                 ),

@@ -6,7 +6,6 @@ class Player {
   const Player({
     required this.person,
     required this.city,
-    required this.level,
     required this.position,
     required this.foot,
     required this.memberSince,
@@ -17,7 +16,6 @@ class Player {
 
   final Person person;
   final City city;
-  final SkillLevel level;
   final PlayerPosition position;
   final PreferredFoot foot;
   final DateTime memberSince;
@@ -35,7 +33,6 @@ class Player {
   Player copyWith({
     Person? person,
     City? city,
-    SkillLevel? level,
     PlayerPosition? position,
     PreferredFoot? foot,
     bool? isMember,
@@ -44,7 +41,6 @@ class Player {
       Player(
         person: person ?? this.person,
         city: city ?? this.city,
-        level: level ?? this.level,
         position: position ?? this.position,
         foot: foot ?? this.foot,
         memberSince: memberSince,

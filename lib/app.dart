@@ -5,13 +5,11 @@ import 'package:go_router/go_router.dart';
 import 'core/config/app_config.dart';
 import 'core/di/app_scope.dart';
 import 'core/di/app_services.dart';
-import 'core/l10n/l10n.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'features/demo/presenter_frame.dart';
 
-/// Root widget: provides services and language, then sets up theme and
-/// navigation.
+/// Root widget: provides services, then sets up theme and navigation.
 class JogaApp extends StatefulWidget {
   const JogaApp({super.key, required this.services});
 
@@ -34,22 +32,19 @@ class _JogaAppState extends State<JogaApp> {
   Widget build(BuildContext context) {
     return AppScope(
       services: widget.services,
-      child: LanguageScope(
-        settings: widget.services.settings,
-        child: MaterialApp.router(
-          title: AppConfig.appName,
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme.dark,
-          darkTheme: AppTheme.dark,
-          themeMode: ThemeMode.dark,
-          routerConfig: _router,
-          scrollBehavior: const _AppScrollBehavior(),
-          // On a laptop or projector the demo shows inside a phone frame
-          // with a presenter panel. On a phone it's full screen as normal.
-          builder: (context, child) => PresenterFrame(
-            router: _router,
-            child: child ?? const SizedBox.shrink(),
-          ),
+      child: MaterialApp.router(
+        title: AppConfig.appName,
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.dark,
+        darkTheme: AppTheme.dark,
+        themeMode: ThemeMode.dark,
+        routerConfig: _router,
+        scrollBehavior: const _AppScrollBehavior(),
+        // On a laptop or projector the demo shows inside a phone frame
+        // with a presenter panel. On a phone it's full screen as normal.
+        builder: (context, child) => PresenterFrame(
+          router: _router,
+          child: child ?? const SizedBox.shrink(),
         ),
       ),
     );

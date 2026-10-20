@@ -37,23 +37,15 @@
 | – | Demo | All screens index | `/demo` | `features/demo/demo_hub_screen.dart` | Demo only |
 | – | Demo | Presenter frame and panel | wraps the app | `features/demo/presenter_frame.dart` | Demo only |
 
-## Translated into Welsh
-
-Welcome and sign-in journey, tab bar, Home, Find, Game details (and the
-players, report and block sheets), Checkout, Booking confirmed, My games,
-Stats, Profile, Settings, Code of conduct, Community impact, and the
-shared widgets. Still English: Game day, Match control, Post-game, Streak,
-Wallet, Joga+, Leaderboard, Referrals and the Admin dashboard.
 
 ## Differentiators built into the demo
 
-- **For you** games on Home (level, city, casual tags)
+- **For you** games on Home (home town, not yet full, beginner-friendly)
 - **5-minute hold** on the last space at checkout
 - **Refund if your space is filled** on late cancellations
 - **Reliability %** on the player profile
-- **Game tags**: Casual, Competitive, Mixed, Over-30s, Women's, Walking
-  football, Welsh-speaking
-- **Bilingual**: English and Welsh
+- **Game tags**: Beginner-friendly, Women's, Mixed, Walking football,
+  Casual. No ability levels: Joga is recreational football
 - **Access and safety** on every game page; report and block; code of
   conduct agreed at sign-up
 - **Community impact** dashboard for partners

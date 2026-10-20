@@ -31,9 +31,9 @@ Either way, the structure below is the same.)
 
 | Table | Purpose |
 |---|---|
-| `profiles` | One per user: name, city, level, position, role (player / organiser / admin) |
+| `profiles` | One per user: name, city, position, preferred foot, role (player / organiser / admin) |
 | `venues` | Name, city, address, surface, parking, photo |
-| `games` | Sport, format, venue, pitch, start time, duration, level, tags, price, capacity, organiser |
+| `games` | Sport, format, venue, pitch, start time, duration, tags, price, capacity, organiser |
 | `space_holds` | Game, player, expires at. Protects the last space while paying |
 | `bookings` | Game, player, status, amount paid, wallet used, Stripe payment id |
 | `waitlist` | Game, player, joined at (after test) |

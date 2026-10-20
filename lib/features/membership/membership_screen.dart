@@ -8,7 +8,8 @@ import '../../core/utils/formatters.dart';
 import '../../core/widgets/widgets.dart';
 import '../../data/models/models.dart';
 
-/// Joga+: no booking fees, full stats, streak freeze and bigger rewards.
+/// Joga+: no booking fees, streak freeze and bigger rewards. Stats are free
+/// for everyone.
 class MembershipScreen extends StatefulWidget {
   const MembershipScreen({super.key});
 

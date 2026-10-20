@@ -11,7 +11,7 @@ import '../../core/widgets/widgets.dart';
 import '../../data/models/models.dart';
 import 'auth_helpers.dart';
 
-/// New player's profile: name, position, foot, level and home town. This
+/// New player's profile: name, position, foot and home town. This
 /// drives "For you" games and the stats from day one.
 class ProfileSetupScreen extends StatefulWidget {
   const ProfileSetupScreen({super.key});
@@ -26,7 +26,6 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   final _last = TextEditingController();
   PlayerPosition _position = PlayerPosition.midfielder;
   PreferredFoot _foot = PreferredFoot.right;
-  SkillLevel _level = SkillLevel.intermediate;
   City _city = City.cardiff;
   bool _busy = false;
 
@@ -54,7 +53,6 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
           lastName: _last.text.trim(),
           position: _position,
           foot: _foot,
-          level: _level,
           city: _city,
         ),
       );
@@ -116,7 +114,8 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
             textInputAction: TextInputAction.next,
             autofillHints: const [AutofillHints.givenName],
             decoration: InputDecoration(labelText: s.firstName),
-            validator: (v) => (v ?? '').trim().isEmpty ? s.nameRequired : null,
+            validator: (v) =>
+                (v ?? '').trim().isEmpty ? s.nameRequired : null,
           ),
           TextFormField(
             controller: _last,
@@ -137,13 +136,6 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
             selected: _foot,
             labelOf: s.foot,
             onSelected: (v) => setState(() => _foot = v),
-          ),
-          _Choice<SkillLevel>(
-            label: s.levelLabel,
-            values: SkillLevel.values,
-            selected: _level,
-            labelOf: s.level,
-            onSelected: (v) => setState(() => _level = v),
           ),
           _Choice<City>(
             label: s.homeCity,

@@ -19,7 +19,7 @@ class TownImpact {
   final int growthPercent;
 }
 
-enum SessionType { open, womens, beginner, over30s, walking, welshLanguage }
+enum SessionType { open, womens, beginner, walking }
 
 /// Share of games by type, e.g. women's games.
 class SessionShare {
@@ -45,7 +45,6 @@ class ImpactDashboard {
     required this.womenPercent,
     required this.womensGames,
     required this.walkingGames,
-    required this.welshLanguageGames,
     required this.averageFillPercent,
     required this.monthlyActive,
     required this.towns,
@@ -66,7 +65,6 @@ class ImpactDashboard {
   final int womenPercent;
   final int womensGames;
   final int walkingGames;
-  final int welshLanguageGames;
   final int averageFillPercent;
 
   /// Active players per month, oldest first. Each entry is (month, players).

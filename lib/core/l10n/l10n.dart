@@ -1,40 +1,19 @@
 import 'package:flutter/widgets.dart';
 
-import '../settings/app_settings.dart';
-import 'app_language.dart';
 import 'app_strings.dart';
-import 'strings_cy.dart';
 import 'strings_en.dart';
 
-export 'app_language.dart';
 export 'app_strings.dart';
 
-/// Gives every widget the strings for the current language, and rebuilds
-/// them when the language changes in Settings.
+/// Every piece of text in the app comes from here, so copy lives in one
+/// place (`strings_en.dart`) instead of being scattered through screens.
 ///
 /// Usage: `final s = context.s;` then `Text(s.findTitle)`.
-class LanguageScope extends InheritedNotifier<AppSettings> {
-  const LanguageScope({
-    super.key,
-    required AppSettings settings,
-    required super.child,
-  }) : super(notifier: settings);
-
-  static const _en = EnStrings();
-  static const _cy = CyStrings();
-
-  static AppStrings stringsFor(AppLanguage language) => switch (language) {
-        AppLanguage.english => _en,
-        AppLanguage.welsh => _cy,
-      };
-
-  static AppStrings of(BuildContext context) {
-    final scope = context.dependOnInheritedWidgetOfExactType<LanguageScope>();
-    final language = scope?.notifier?.language ?? AppLanguage.english;
-    return stringsFor(language);
-  }
-}
-
+///
+/// English only. To add a language later, add another `AppStrings`
+/// subclass and pick it here based on a setting.
 extension StringsContext on BuildContext {
-  AppStrings get s => LanguageScope.of(this);
+  AppStrings get s => _strings;
 }
+
+const AppStrings _strings = EnStrings();

@@ -12,7 +12,7 @@ import '../../data/models/models.dart';
 /// Find: browse and filter games by day, town, format, level and tags.
 ///
 /// The third row puts inclusive sessions up front: beginner-friendly,
-/// women's, walking football and Welsh-language games.
+/// women's, mixed and walking football games.
 class FindScreen extends StatefulWidget {
   const FindScreen({super.key});
 
@@ -71,22 +71,11 @@ class _Filters extends StatelessWidget {
 
   /// Sessions aimed at people who might not join a standard game.
   static const _inclusiveTags = [
+    GameTag.beginner,
     GameTag.womens,
-    GameTag.walking,
-    GameTag.welshSpeaking,
     GameTag.mixed,
-    GameTag.over30s,
+    GameTag.walking,
   ];
-
-  Widget _levelChip(AppStrings s, SkillLevel level, {IconData? icon}) =>
-      JogaChip(
-        label: s.level(level),
-        icon: icon,
-        tone: filter.level == level ? ChipTone.selected : ChipTone.normal,
-        onTap: () => onChanged(
-          filter.copyWith(level: () => filter.level == level ? null : level),
-        ),
-      );
 
   Widget _tagChip(AppStrings s, GameTag tag, {IconData? icon}) => JogaChip(
         label: s.tag(tag),
@@ -98,9 +87,9 @@ class _Filters extends StatelessWidget {
       );
 
   static IconData? _iconFor(GameTag tag) => switch (tag) {
+        GameTag.beginner => Icons.emoji_people_rounded,
         GameTag.womens => Icons.female_rounded,
         GameTag.walking => Icons.directions_walk_rounded,
-        GameTag.welshSpeaking => Icons.translate_rounded,
         _ => null,
       };
 
@@ -145,8 +134,6 @@ class _Filters extends StatelessWidget {
         ChipRow(
           padding: pad,
           children: [
-            _levelChip(s, SkillLevel.beginner,
-                icon: Icons.emoji_people_rounded),
             for (final tag in _inclusiveTags)
               _tagChip(s, tag, icon: _iconFor(tag)),
           ],
@@ -175,8 +162,6 @@ class _Filters extends StatelessWidget {
                 ),
               ),
             ),
-            _levelChip(s, SkillLevel.intermediate),
-            _levelChip(s, SkillLevel.competitive),
             _tagChip(s, GameTag.casual),
           ],
         ),

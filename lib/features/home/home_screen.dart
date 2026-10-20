@@ -163,8 +163,9 @@ class _HomeBody extends StatelessWidget {
           for (final game in data.forYou) ...[
             GameCard(
               game: game,
-              reason:
-                  game.level == me.level ? s.reasonYourLevel : s.reasonNearYou,
+              reason: game.tags.contains(GameTag.beginner)
+                  ? s.tag(GameTag.beginner)
+                  : s.reasonNearYou,
               onTap: () => context.push(Routes.game(game.id)),
             ),
             const SizedBox(height: Space.md),
@@ -212,7 +213,9 @@ class _NextGameFooterState extends State<_NextGameFooter> {
         const SizedBox(width: Space.xs + 2),
         Expanded(
           child: Text(
-            left.isNegative ? s.kickedOff : s.kickOffIn(Format.countdown(left)),
+            left.isNegative
+                ? s.kickedOff
+                : s.kickOffIn(Format.countdown(left)),
             style: AppText.smallStrong,
             overflow: TextOverflow.ellipsis,
           ),
@@ -250,7 +253,9 @@ class _StreakNudge extends StatelessWidget {
               const SizedBox(width: Space.xs + 2),
               Expanded(
                 child: Text(
-                  safe ? s.streakSafe : s.playBySunday(streak.currentWeeks + 1),
+                  safe
+                      ? s.streakSafe
+                      : s.playBySunday(streak.currentWeeks + 1),
                   style: AppText.bodyStrong,
                 ),
               ),

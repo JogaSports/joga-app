@@ -25,8 +25,7 @@ class GameDetailsScreen extends StatelessWidget {
   final String gameId;
 
   static Future<_GameData> _load(AppServices s, String id) async {
-    final (game, me) =
-        await (s.games.getGame(id), s.player.currentPlayer()).wait;
+    final (game, me) = await (s.games.getGame(id), s.player.currentPlayer()).wait;
     return (game: game, me: me);
   }
 
@@ -82,15 +81,13 @@ class _GameDetails extends StatelessWidget {
                     Text(
                       '${s.shortDate(game.startsAt)} · '
                       '${Format.time(game.startsAt)} · '
-                      '${s.minutes(game.duration.inMinutes)} · '
-                      '${s.level(game.level)}',
+                      '${s.minutes(game.duration.inMinutes)}',
                       style: AppText.small,
                     ),
                     const SizedBox(height: Space.sm),
                     ChipRow(
                       children: [
-                        for (final tag in game.tags)
-                          JogaChip(label: s.tag(tag)),
+                        for (final tag in game.tags) JogaChip(label: s.tag(tag)),
                         JogaChip(label: s.bibsProvided),
                       ],
                     ),
