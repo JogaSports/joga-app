@@ -1,3 +1,4 @@
+import 'enums.dart';
 import 'game.dart';
 
 enum GameHealth {
@@ -45,6 +46,10 @@ class AdminDashboard {
   int get almostFull => games.where((g) => g.game.isAlmostFull).length;
   int get atRisk => games.where((g) => g.health == GameHealth.atRisk).length;
   int get resultsOutstanding => games.where((g) => g.resultOutstanding).length;
-  int get revenuePence => games.fold(0, (sum, g) => sum + g.revenuePence);
-  int get marginPence => games.fold(0, (sum, g) => sum + g.marginPence);
+  /// Totals in pounds, from UK games only: shillings and lari can't be
+  /// added to pounds. Each game row shows its own currency.
+  Iterable<AdminGameRow> get _ukGames =>
+      games.where((g) => g.game.currency == Currency.gbp);
+  int get revenuePence => _ukGames.fold(0, (sum, g) => sum + g.revenuePence);
+  int get marginPence => _ukGames.fold(0, (sum, g) => sum + g.marginPence);
 }

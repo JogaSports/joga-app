@@ -1,3 +1,5 @@
+import 'enums.dart';
+
 /// Price breakdown shown before paying.
 class BookingQuote {
   const BookingQuote({
@@ -5,7 +7,11 @@ class BookingQuote {
     required this.feePence,
     required this.walletAvailablePence,
     required this.isMember,
+    this.currency = Currency.gbp,
   });
+
+  /// All amounts below are in this currency's minor unit.
+  final Currency currency;
 
   final int gamePence;
 

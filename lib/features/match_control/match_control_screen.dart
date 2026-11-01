@@ -114,8 +114,8 @@ class _MatchControlScreenState extends State<MatchControlScreen> {
           ],
         ),
         Text(
-          '${sheet.game.venue.name} · ${Format.shortDate(sheet.game.startsAt)} '
-          '· ${Format.time(sheet.game.startsAt)}',
+          '${sheet.game.venue.name} · ${Format.shortDate(sheet.game.kickOff)} '
+          '· ${Format.time(sheet.game.kickOff)}',
           style: AppText.small,
         ),
         _StepBar(current: _step),

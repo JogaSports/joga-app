@@ -6,6 +6,7 @@ import '../../core/l10n/l10n.dart';
 import '../../core/router/routes.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/theme/app_text.dart';
+import '../../core/utils/formatters.dart';
 import '../../core/widgets/widgets.dart';
 import '../../data/models/models.dart';
 
@@ -123,10 +124,16 @@ class _Filters extends StatelessWidget {
                 icon: city == filter.city ? Icons.place_rounded : null,
                 tone: filter.city == city
                     ? ChipTone.selected
-                    : city.inWales
-                        ? ChipTone.normal
-                        : ChipTone.muted,
-                onTap: () => onChanged(filter.copyWith(city: city)),
+                    : ChipTone.normal,
+                // Keep the price filter on, at the new city's amount.
+                onTap: () => onChanged(
+                  filter.copyWith(
+                    city: city,
+                    maxPricePence: () => filter.maxPricePence == null
+                        ? null
+                        : city.underPriceMinor - 1,
+                  ),
+                ),
               ),
           ],
         ),
@@ -153,12 +160,14 @@ class _Filters extends StatelessWidget {
                 ),
               ),
             JogaChip.filter(
-              label: s.underPrice,
+              label: s.underPrice(Format.moneyShort(
+                  filter.city.underPriceMinor, filter.city.currency)),
               selected: filter.maxPricePence != null,
               onTap: () => onChanged(
                 filter.copyWith(
-                  maxPricePence: () =>
-                      filter.maxPricePence == null ? 699 : null,
+                  maxPricePence: () => filter.maxPricePence == null
+                      ? filter.city.underPriceMinor - 1
+                      : null,
                 ),
               ),
             ),

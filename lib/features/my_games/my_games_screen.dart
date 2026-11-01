@@ -102,7 +102,8 @@ class _MyGamesScreenState extends State<MyGamesScreen> {
               const SizedBox(width: Space.xs + 2),
               Expanded(
                 child: Text(
-                  s.bookedDaysToGo(s.daysToGo(game.startsAt)),
+                  s.bookedDaysToGo(
+                      s.daysToGo(game.kickOff, now: game.city.clockNow())),
                   style: AppText.smallStrong,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -200,7 +201,9 @@ class _MyGamesScreenState extends State<MyGamesScreen> {
             Text(
               isLate
                   ? s.cancelLate(AppConfig.freeCancellation.inHours)
-                  : s.cancelRefund,
+                  : game.city.usesWallet
+                      ? s.cancelRefund
+                      : s.cancelRefundLocal,
               style: AppText.body,
             ),
             const SizedBox(height: Space.lg),
@@ -225,7 +228,11 @@ class _MyGamesScreenState extends State<MyGamesScreen> {
       SnackBar(
         content: Text(
           outcome == CancelOutcome.refunded
-              ? s.cancelledRefunded(Format.money(game.pricePence))
+              ? game.city.usesWallet
+                  ? s.cancelledRefunded(
+                      Format.money(game.pricePence, game.currency))
+                  : s.cancelledRefundedLocal(
+                      Format.money(game.pricePence, game.currency))
               : s.cancelledIfFilled,
         ),
       ),

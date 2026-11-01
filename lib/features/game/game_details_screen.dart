@@ -51,7 +51,7 @@ class _GameDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = context.s;
     final booked = game.hasPlayer(me.id);
-    final fee = me.isMember ? 0 : AppConfig.bookingFeePence;
+    final fee = me.isMember ? 0 : game.city.bookingFeeMinor;
 
     return Column(
       children: [
@@ -79,8 +79,8 @@ class _GameDetails extends StatelessWidget {
                     ),
                     const SizedBox(height: Space.xs),
                     Text(
-                      '${s.shortDate(game.startsAt)} · '
-                      '${Format.time(game.startsAt)} · '
+                      '${s.shortDate(game.kickOff)} · '
+                      '${Format.time(game.kickOff)} · '
                       '${s.minutes(game.duration.inMinutes)}',
                       style: AppText.small,
                     ),
@@ -374,10 +374,10 @@ class _PriceCard extends StatelessWidget {
     return JogaCard(
       child: Column(
         children: [
-          PriceRow(label: s.priceGame, value: Format.money(game.pricePence)),
+          PriceRow(label: s.priceGame, value: Format.money(game.pricePence, game.currency)),
           PriceRow(
             label: s.bookingFee,
-            value: feePence == 0 ? s.free : Format.money(feePence),
+            value: feePence == 0 ? s.free : Format.money(feePence, game.currency),
             color: feePence == 0 ? AppColors.lime : null,
           ),
           if (feePence > 0)
@@ -399,7 +399,7 @@ class _PriceCard extends StatelessWidget {
           const JogaDivider(),
           PriceRow(
             label: s.total,
-            value: Format.money(game.pricePence + feePence),
+            value: Format.money(game.pricePence + feePence, game.currency),
             strong: true,
           ),
         ],
@@ -479,7 +479,7 @@ class _BottomActionState extends State<_BottomAction> {
     } else {
       action = JogaButton(
         label: s.joinGame(
-          Format.moneyShort(game.pricePence + widget.feePence),
+          Format.moneyShort(game.pricePence + widget.feePence, game.currency),
         ),
         onPressed: () => context.push(Routes.checkout(game.id)),
       );

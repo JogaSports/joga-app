@@ -122,7 +122,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ? s.holdAgain
             : total == 0
                 ? s.confirmWithCredit
-                : s.payAndPlay(Format.money(total)),
+                : s.payAndPlay(Format.money(total, quote.currency)),
         icon: expired ? Icons.refresh_rounded : Icons.lock_rounded,
         loading: _paying,
         onPressed: expired ? _start : _pay,
@@ -137,24 +137,24 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           child: Column(
             children: [
               PriceRow(
-                  label: s.priceGame, value: Format.money(quote.gamePence)),
+                  label: s.priceGame, value: Format.money(quote.gamePence, quote.currency)),
               PriceRow(
                 label: s.bookingFee,
                 value: quote.isMember
                     ? s.freeWith(AppConfig.membershipName)
-                    : Format.money(quote.feePence),
+                    : Format.money(quote.feePence, quote.currency),
                 color: quote.isMember ? AppColors.lime : null,
               ),
               if (walletApplied > 0)
                 PriceRow(
                   label: s.walletCredit,
-                  value: Format.money(-walletApplied),
+                  value: Format.money(-walletApplied, quote.currency),
                   color: AppColors.lime,
                 ),
               const JogaDivider(),
               PriceRow(
                 label: s.total,
-                value: Format.money(total),
+                value: Format.money(total, quote.currency),
                 strong: true,
               ),
             ],
@@ -163,7 +163,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         if (quote.walletAvailablePence > 0)
           _ToggleRow(
             title: s.useWalletCredit,
-            subtitle: s.available(Format.money(quote.walletAvailablePence)),
+            subtitle: s.available(Format.money(quote.walletAvailablePence, quote.currency)),
             value: _useWallet,
             onChanged: (v) => setState(() => _useWallet = v),
           ),
@@ -254,8 +254,8 @@ class _GameSummary extends StatelessWidget {
               children: [
                 Headline(s.format(game.format), style: AppText.h3),
                 Text(
-                  '${s.shortDate(game.startsAt)} · '
-                  '${Format.time(game.startsAt)} · ${game.venue.name}',
+                  '${s.shortDate(game.kickOff)} · '
+                  '${Format.time(game.kickOff)} · ${game.venue.name}',
                   style: AppText.small,
                 ),
               ],

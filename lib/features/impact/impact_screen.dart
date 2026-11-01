@@ -420,10 +420,6 @@ class _TownRow extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            if (!town.city.inWales) ...[
-              const SizedBox(width: Space.sm),
-              JogaChip(label: s.pilot, tone: ChipTone.muted),
-            ],
             const Spacer(),
             JogaChip(
               label: s.growth(town.growthPercent),

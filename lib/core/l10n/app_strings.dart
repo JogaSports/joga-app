@@ -148,7 +148,7 @@ abstract class AppStrings {
 
   // Find --------------------------------------------------------------------
   String get findTitle;
-  String get underPrice;
+  String underPrice(String price);
   String get noGamesMatch;
   String get noGamesMatchBody;
   String get clearFilters;
@@ -249,9 +249,11 @@ abstract class AppStrings {
   String get cancelTitle;
   String cancelLate(int hours);
   String get cancelRefund;
+  String get cancelRefundLocal;
   String get yesCancel;
   String get keepSpot;
   String cancelledRefunded(String price);
+  String cancelledRefundedLocal(String price);
   String get cancelledIfFilled;
   String scoreLine(MatchResult result);
 
@@ -341,7 +343,6 @@ abstract class AppStrings {
   String get exportReport;
   String get exportSoon;
   String get privacyNote;
-  String get pilot;
 
   // Presenter ---------------------------------------------------------------
   String get presenterTitle;

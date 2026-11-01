@@ -1,8 +1,8 @@
 # Joga Sports
 
 Find, book and play organised football, with stats, streaks and rewards.
-Starting in Cardiff and Bristol, with the demo also showing Swansea, Newport
-and Wrexham. Football first; padel, badminton and other sports later.
+Launching in Bristol, London, Cardiff, Nairobi and Tbilisi. Football first;
+padel, badminton and other sports later.
 
 This repo is the **demo**: every screen of the MVP, a full sign-up and
 sign-in journey and a community impact dashboard, all
@@ -42,8 +42,10 @@ See `docs/DEMO_SCRIPT.md` for a 10-minute script for presenting.
 2. **Get started** → Continue with Apple / Google (signs straight in as
    Ray), or **Continue with email** → create account → 6-digit code (any
    code) → profile setup → permissions → Home.
-3. **Find**: towns across Wales, plus quick filters for beginner-friendly,
-   women's, mixed and walking football games.
+3. **Find**: Bristol, London, Cardiff, Nairobi and Tbilisi, plus quick
+   filters for beginner-friendly, women's, mixed and walking football games.
+   Prices show in each city's currency (£, KSh, ₾) and kick-off times on
+   the city's own clock.
 4. **Game details** → see players (report and block), access and safety
    (step-free, defibrillator, first aid) → **Join game** → 5-minute hold →
    **Pay** → confirmation with confetti.

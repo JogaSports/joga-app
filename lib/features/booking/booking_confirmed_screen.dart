@@ -78,8 +78,8 @@ class BookingConfirmedScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: Space.sm),
                     Text(
-                      '${s.weekdayLong(game.startsAt)} · '
-                      '${Format.time(game.startsAt)}\n'
+                      '${s.weekdayLong(game.kickOff)} · '
+                      '${Format.time(game.kickOff)}\n'
                       '${game.venue.name} · ${s.format(game.format)}',
                       style:
                           AppText.body.copyWith(color: AppColors.textSecondary),

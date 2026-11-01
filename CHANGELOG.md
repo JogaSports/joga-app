@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.2.3 – Launch cities
+
+- Cities are now Bristol, London, Cardiff, Nairobi and Tbilisi, in that
+  order, matching the backend. Swansea, Newport and Wrexham are gone
+- Each city has its country, timezone and currency (`City` in
+  `data/models/enums.dart`)
+- Prices show in the game's currency: £8.00, KSh 500, 15 ₾
+- Kick-off times and "Tonight / Tomorrow" use the city's own clock, so a
+  Nairobi 7pm game reads 7pm on any phone
+- Booking fee is per city. Nairobi and Tbilisi fees are placeholders until
+  the PO decides how money works outside the UK
+- Wallet credit is offered on UK games only (the wallet holds pounds);
+  cancelling a Nairobi or Tbilisi game doesn't refund to the wallet
+- Find's price filter uses each city's amount (Under £7, Under KSh 500…)
+- Admin revenue and margin totals count UK games (£); each game row shows
+  its own currency
+- Demo data: venues, games and players in London, Nairobi and Tbilisi with
+  the same ids as the backend seed (g-301 to g-502)
+
 ## 0.2.2 – English only, fixes
 
 - Removed Welsh completely (language switch, translations, review doc).

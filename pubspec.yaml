@@ -1,7 +1,7 @@
 name: joga_sports
 description: Joga Sports – find, book and play organised football, with stats, streaks and rewards.
 publish_to: 'none'
-version: 0.2.0+2
+version: 0.2.3+3
 
 environment:
   sdk: ^3.6.0

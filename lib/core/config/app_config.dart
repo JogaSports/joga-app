@@ -4,7 +4,7 @@ abstract final class AppConfig {
   static const appName = 'Joga Sports';
   static const membershipName = 'Joga+';
 
-  static const bookingFeePence = 100;
+  // Booking fees are per city (City.bookingFeeMinor), in local currency.
   static const membershipMonthlyPence = 499;
   static const referralRewardPence = 200;
 

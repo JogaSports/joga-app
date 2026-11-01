@@ -1,3 +1,5 @@
+import '../../data/models/enums.dart';
+
 /// Formatting helpers for money, dates and durations.
 ///
 /// Kept dependency-free on purpose. Swap for `intl` if localisation is
@@ -28,22 +30,30 @@ abstract final class Format {
     'Dec',
   ];
 
-  /// 800 -> "£8.00"
-  static String money(int pence) {
-    final sign = pence < 0 ? '−' : '';
-    final abs = pence.abs();
-    final pounds = abs ~/ 100;
-    final rem = (abs % 100).toString().padLeft(2, '0');
-    return '$sign£$pounds.$rem';
+  /// 800 -> "£8.00", 50000 (KES) -> "KSh 500", 1550 (GEL) -> "15.50 ₾".
+  /// Amounts are in the currency's minor unit; pounds unless [currency]
+  /// says otherwise.
+  static String money(int minor, [Currency currency = Currency.gbp]) {
+    final sign = minor < 0 ? '−' : '';
+    final abs = minor.abs();
+    final whole = count(abs ~/ 100);
+    final rem = abs % 100;
+    final number = currency.showMinor || rem != 0
+        ? '$whole.${rem.toString().padLeft(2, '0')}'
+        : whole;
+    return '$sign${currency.prefix}$number${currency.suffix}';
   }
 
-  /// 800 -> "£8", 650 -> "£6.50"
-  static String moneyShort(int pence) =>
-      pence % 100 == 0 ? '£${pence ~/ 100}' : money(pence);
+  /// 800 -> "£8", 650 -> "£6.50", 50000 (KES) -> "KSh 500"
+  static String moneyShort(int minor, [Currency currency = Currency.gbp]) {
+    if (minor % 100 != 0) return money(minor, currency);
+    final sign = minor < 0 ? '−' : '';
+    return '$sign${currency.prefix}${count(minor.abs() ~/ 100)}${currency.suffix}';
+  }
 
   /// 250 -> "+£2.50", -800 -> "−£8.00"
-  static String moneySigned(int pence) =>
-      pence >= 0 ? '+${money(pence)}' : money(pence);
+  static String moneySigned(int minor, [Currency currency = Currency.gbp]) =>
+      minor >= 0 ? '+${money(minor, currency)}' : money(minor, currency);
 
   /// 1284 -> "1,284"
   static String count(int n) {

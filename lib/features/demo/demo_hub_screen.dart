@@ -40,10 +40,12 @@ class DemoHubScreen extends StatelessWidget {
       'Find',
       [
         _Entry('Home', Routes.home, go: true),
-        _Entry('Find games (towns, inclusive filters)', Routes.find,
+        _Entry('Find games (cities, inclusive filters)', Routes.find,
             go: true),
         _Entry('Walking football', Routes.game('g-110')),
-        _Entry("Women's game · Swansea", Routes.game('g-302')),
+        _Entry("Women's game · London", Routes.game('g-302')),
+        _Entry('Nairobi game · KSh', Routes.game('g-401')),
+        _Entry('Tbilisi game · ₾', Routes.game('g-501')),
       ],
     ),
     (

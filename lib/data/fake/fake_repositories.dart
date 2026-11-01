@@ -133,9 +133,12 @@ class FakeGamesRepository implements GamesRepository {
   @override
   Future<List<Game>> findGames(GameFilter filter) async {
     await _db.wait();
-    final today = DateTime(_db.now.year, _db.now.month, _db.now.day);
-    bool matchesDay(DateTime d) {
-      final diff = DateTime(d.year, d.month, d.day).difference(today).inDays;
+    // "Tonight", "Tomorrow" and "Weekend" mean on the city's own clock.
+    final cityNow = filter.city.wallClock(_db.now);
+    final today = DateTime.utc(cityNow.year, cityNow.month, cityNow.day);
+    bool matchesDay(DateTime startsAt) {
+      final d = filter.city.wallClock(startsAt);
+      final diff = DateTime.utc(d.year, d.month, d.day).difference(today).inDays;
       return switch (filter.day) {
         DayFilter.all => true,
         DayFilter.today => diff == 0,
@@ -194,14 +197,19 @@ class FakeBookingRepository implements BookingRepository {
   @override
   Future<BookingQuote> quote(String gameId) async {
     await _db.wait();
-    final game = _db.game(gameId);
-    return BookingQuote(
-      gamePence: game.pricePence,
-      feePence: _db.me.isMember ? 0 : AppConfig.bookingFeePence,
-      walletAvailablePence: _db.walletBalancePence,
-      isMember: _db.me.isMember,
-    );
+    return _quoteFor(_db.game(gameId));
   }
+
+  /// Price breakdown in the game's currency. The wallet holds pounds, so
+  /// it's only offered on UK games for now.
+  BookingQuote _quoteFor(Game game) => BookingQuote(
+        gamePence: game.pricePence,
+        feePence: _db.me.isMember ? 0 : game.city.bookingFeeMinor,
+        walletAvailablePence:
+            game.city.usesWallet ? _db.walletBalancePence : 0,
+        isMember: _db.me.isMember,
+        currency: game.currency,
+      );
 
   @override
   Future<SpaceHold> holdSpace(String gameId) async {
@@ -226,12 +234,7 @@ class FakeBookingRepository implements BookingRepository {
     _db.holds.remove(hold.id);
 
     final game = _db.game(hold.gameId);
-    final quote = BookingQuote(
-      gamePence: game.pricePence,
-      feePence: _db.me.isMember ? 0 : AppConfig.bookingFeePence,
-      walletAvailablePence: _db.walletBalancePence,
-      isMember: _db.me.isMember,
-    );
+    final quote = _quoteFor(game);
     final walletUsed = quote.walletAppliedPence(useWallet: useWallet);
 
     _db.games[game.id] = game.copyWith(
@@ -269,7 +272,7 @@ class FakeBookingRepository implements BookingRepository {
 
     final insideFreeWindow =
         game.startsAt.difference(_db.now) >= AppConfig.freeCancellation;
-    if (insideFreeWindow) {
+    if (insideFreeWindow && game.city.usesWallet) {
       _db.walletEntries.add(
         WalletEntry(
           label: 'Refund · ${game.venue.name}',
@@ -558,9 +561,7 @@ class FakeCompeteRepository implements CompeteRepository {
   @override
   Future<Leaderboard> leaderboard(City city, LeaderboardMetric metric) async {
     await _db.wait();
-    final pool = city == City.cardiff
-        ? FakeSeed.people.take(12).toList()
-        : FakeSeed.people.skip(12).take(12).toList();
+    final pool = FakeSeed.regularsIn(city);
     final base = switch (metric) {
       LeaderboardMetric.goals => [14, 12, 10, 9, 8, 7, 7, 6, 5, 5, 4, 3],
       LeaderboardMetric.assists => [11, 9, 9, 8, 7, 6, 5, 5, 4, 4, 3, 2],
@@ -671,7 +672,11 @@ class FakeAdminRepository implements AdminRepository {
     AdminGameRow row(Game g, {required bool outstanding}) => AdminGameRow(
           game: g,
           revenuePence: g.booked * g.pricePence,
-          venueCostPence: _venueCostPence[g.format]!,
+          // Demo venue costs: fixed for UK pitches; elsewhere, 70% of a
+          // full game's takings in the local currency.
+          venueCostPence: g.city.usesWallet
+              ? _venueCostPence[g.format]!
+              : (g.capacity * g.pricePence * 0.7).round(),
           resultOutstanding: outstanding,
         );
 
@@ -777,33 +782,33 @@ class FakeImpactRepository implements ImpactRepository {
       towns: [
         TownImpact(
           city: City.cardiff,
-          players: n(612),
-          games: n(98),
+          players: n(512),
+          games: n(86),
           growthPercent: 18,
         ),
         TownImpact(
-          city: City.swansea,
-          players: n(284),
-          games: n(46),
-          growthPercent: 31,
-        ),
-        TownImpact(
-          city: City.newport,
-          players: n(198),
-          games: n(33),
-          growthPercent: 24,
-        ),
-        TownImpact(
-          city: City.wrexham,
-          players: n(142),
-          games: n(25),
-          growthPercent: 42,
+          city: City.london,
+          players: n(386),
+          games: n(62),
+          growthPercent: 26,
         ),
         TownImpact(
           city: City.bristol,
-          players: n(48),
-          games: n(10),
+          players: n(168),
+          games: n(28),
           growthPercent: 12,
+        ),
+        TownImpact(
+          city: City.nairobi,
+          players: n(152),
+          games: n(24),
+          growthPercent: 44,
+        ),
+        TownImpact(
+          city: City.tbilisi,
+          players: n(66),
+          games: n(12),
+          growthPercent: 38,
         ),
       ],
       sessions: const [

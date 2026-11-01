@@ -31,6 +31,14 @@ class Game {
   final int organiserGamesRun;
 
   Sport get sport => format.sport;
+  City get city => venue.city;
+
+  /// Prices are in this currency's minor unit.
+  Currency get currency => venue.city.currency;
+
+  /// Kick-off as shown on a clock in the game's city. Use for display only
+  /// (time, day, "Tonight"); use [startsAt] for countdowns and comparisons.
+  DateTime get kickOff => venue.city.wallClock(startsAt);
   int get capacity => format.capacity;
   int get booked => players.length;
   int get spacesLeft => capacity - booked;

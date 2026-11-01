@@ -48,6 +48,64 @@ abstract final class FakeSeed {
   static List<Person> pick(int from, int count) =>
       [for (var i = 0; i < count; i++) people[(from + i) % people.length]];
 
+  // London, Nairobi and Tbilisi regulars and organisers. Same names as the
+  // backend's local seed.
+  static const marcus = Person(id: 'p-marcus', firstName: 'Marcus', lastName: 'Reid');
+  static const chloe = Person(id: 'p-chloe', firstName: 'Chloe', lastName: 'Mensah');
+  static const kevin = Person(id: 'p-kevin', firstName: 'Kevin', lastName: 'Mwangi');
+  static const giorgi = Person(id: 'p-giorgi', firstName: 'Giorgi', lastName: 'Beridze');
+
+  static const londoners = <Person>[
+    Person(id: 'p-zara', firstName: 'Zara', lastName: 'Ahmed'),
+    Person(id: 'p-tunde', firstName: 'Tunde', lastName: 'Bakare'),
+    Person(id: 'p-jamie', firstName: 'Jamie', lastName: 'Cole'),
+    Person(id: 'p-aisha', firstName: 'Aisha', lastName: 'Khan'),
+    Person(id: 'p-kofi', firstName: 'Kofi', lastName: 'Boateng'),
+    Person(id: 'p-priya', firstName: 'Priya', lastName: 'Shah'),
+    Person(id: 'p-ryan', firstName: 'Ryan', lastName: "O'Connor"),
+    Person(id: 'p-leon', firstName: 'Leon', lastName: 'Grant'),
+    Person(id: 'p-sofia', firstName: 'Sofia', lastName: 'Rossi'),
+    Person(id: 'p-dami', firstName: 'Dami', lastName: 'Adeyemi'),
+  ];
+
+  static const nairobians = <Person>[
+    Person(id: 'p-brian', firstName: 'Brian', lastName: 'Otieno'),
+    Person(id: 'p-faith', firstName: 'Faith', lastName: 'Wanjiru'),
+    Person(id: 'p-dennis', firstName: 'Dennis', lastName: 'Kiprop'),
+    Person(id: 'p-mercy', firstName: 'Mercy', lastName: 'Achieng'),
+    Person(id: 'p-collins', firstName: 'Collins', lastName: 'Odhiambo'),
+    Person(id: 'p-njeri', firstName: 'Grace', lastName: 'Njeri'),
+    Person(id: 'p-peter', firstName: 'Peter', lastName: 'Kamau'),
+    Person(id: 'p-ian', firstName: 'Ian', lastName: 'Mutua'),
+    Person(id: 'p-lilian', firstName: 'Lilian', lastName: 'Atieno'),
+    Person(id: 'p-samuel', firstName: 'Samuel', lastName: 'Kiptoo'),
+  ];
+
+  static const tbilisians = <Person>[
+    Person(id: 'p-nika', firstName: 'Nika', lastName: 'Kapanadze'),
+    Person(id: 'p-luka', firstName: 'Luka', lastName: 'Gelashvili'),
+    Person(id: 'p-mariam', firstName: 'Mariam', lastName: 'Lomidze'),
+    Person(id: 'p-davit', firstName: 'Davit', lastName: 'Tsiklauri'),
+    Person(id: 'p-giga', firstName: 'Giga', lastName: 'Maisuradze'),
+    Person(id: 'p-levan', firstName: 'Levan', lastName: 'Chkheidze'),
+    Person(id: 'p-nino', firstName: 'Nino', lastName: 'Japaridze'),
+    Person(id: 'p-irakli', firstName: 'Irakli', lastName: 'Melia'),
+    Person(id: 'p-tamar', firstName: 'Tamar', lastName: 'Abashidze'),
+    Person(id: 'p-sandro', firstName: 'Sandro', lastName: 'Gabunia'),
+  ];
+
+  /// Regulars in [city], for leaderboards.
+  static List<Person> regularsIn(City city) => switch (city) {
+        City.cardiff => people.take(12).toList(),
+        City.bristol => people.skip(12).take(12).toList(),
+        City.london => londoners,
+        City.nairobi => nairobians,
+        City.tbilisi => tbilisians,
+      };
+
+  static List<Person> _from(List<Person> pool, int from, int count) =>
+      [for (var i = 0; i < count; i++) pool[(from + i) % pool.length]];
+
   static Player player(DateTime now) => Player(
         person: ray,
         city: City.cardiff,
@@ -164,14 +222,23 @@ abstract final class FakeSeed {
     ],
   );
 
-  // Swansea
-  static const swanseaBay = Venue(
-    id: 'v-swansea-bay',
-    name: 'Swansea Bay 3G',
-    city: City.swansea,
-    address: 'Fabian Way, Swansea SA1',
+  // London. Made-up venues for the demo.
+  static const shoreditch = Venue(
+    id: 'v-shoreditch',
+    name: 'Shoreditch Cage',
+    city: City.london,
+    address: 'Shoreditch, London E2',
+    surface: 'Astro · astros only',
+    parking: 'Street parking',
+    facilities: [VenueFacility.floodlights, VenueFacility.firstAid],
+  );
+  static const hackneyWick = Venue(
+    id: 'v-hackney-wick',
+    name: 'Hackney Wick 3G',
+    city: City.london,
+    address: 'Hackney Wick, London E9',
     surface: '3G · moulds or astros',
-    parking: 'Free, on site',
+    parking: 'Pay and display',
     facilities: [
       VenueFacility.floodlights,
       VenueFacility.changingRooms,
@@ -179,57 +246,40 @@ abstract final class FakeSeed {
       VenueFacility.accessibleToilet,
       VenueFacility.defibrillator,
       VenueFacility.firstAid,
+    ],
+  );
+
+  // Nairobi
+  static const westlands = Venue(
+    id: 'v-westlands',
+    name: 'Westlands Turf',
+    city: City.nairobi,
+    address: 'Westlands, Nairobi',
+    surface: '3G · moulds or astros',
+    parking: 'Free, on site',
+    facilities: [
+      VenueFacility.floodlights,
+      VenueFacility.changingRooms,
+      VenueFacility.firstAid,
       VenueFacility.parking,
     ],
   );
-  static const landore = Venue(
-    id: 'v-landore',
-    name: 'Landore Sports Cage',
-    city: City.swansea,
-    address: 'Neath Road, Swansea SA1',
+  static const kilimani = Venue(
+    id: 'v-kilimani',
+    name: 'Kilimani 5s',
+    city: City.nairobi,
+    address: 'Kilimani, Nairobi',
     surface: 'Astro · astros only',
     parking: 'Street parking',
     facilities: [VenueFacility.floodlights, VenueFacility.firstAid],
   );
 
-  // Newport
-  static const spytty = Venue(
-    id: 'v-spytty',
-    name: 'Spytty Park 3G',
-    city: City.newport,
-    address: 'Spytty Road, Newport NP19',
-    surface: '3G · moulds or astros',
-    parking: 'Free, on site',
-    facilities: [
-      VenueFacility.floodlights,
-      VenueFacility.changingRooms,
-      VenueFacility.stepFree,
-      VenueFacility.accessibleToilet,
-      VenueFacility.defibrillator,
-      VenueFacility.firstAid,
-      VenueFacility.parking,
-    ],
-  );
-  static const riverside = Venue(
-    id: 'v-riverside',
-    name: 'Riverside Cage',
-    city: City.newport,
-    address: 'Usk Way, Newport NP20',
-    surface: 'Astro · astros only',
-    parking: 'Pay and display',
-    facilities: [
-      VenueFacility.floodlights,
-      VenueFacility.stepFree,
-      VenueFacility.firstAid,
-    ],
-  );
-
-  // Wrexham
-  static const wrexham3g = Venue(
-    id: 'v-wrexham',
-    name: 'Wrexham Community 3G',
-    city: City.wrexham,
-    address: 'Plas Coch Road, Wrexham LL11',
+  // Tbilisi
+  static const vakePark = Venue(
+    id: 'v-vake',
+    name: 'Vake Park Pitch',
+    city: City.tbilisi,
+    address: 'Vake, Tbilisi',
     surface: '3G · moulds or astros',
     parking: 'Free, on site',
     facilities: [
@@ -241,11 +291,11 @@ abstract final class FakeSeed {
       VenueFacility.parking,
     ],
   );
-  static const actonPark = Venue(
-    id: 'v-acton',
-    name: 'Acton Park Cage',
-    city: City.wrexham,
-    address: 'Acton, Wrexham LL12',
+  static const saburtalo = Venue(
+    id: 'v-saburtalo',
+    name: 'Saburtalo Cage',
+    city: City.tbilisi,
+    address: 'Saburtalo, Tbilisi',
     surface: 'Astro · astros only',
     parking: 'Street parking',
     facilities: [VenueFacility.floodlights, VenueFacility.firstAid],
@@ -263,10 +313,17 @@ abstract final class FakeSeed {
   static const lastPlayedGameId = 'g-099';
 
   static List<Game> games(DateTime now) {
-    DateTime at(int dayOffset, int hour, [int minute = 0]) =>
-        DateTime(now.year, now.month, now.day + dayOffset, hour, minute);
+    // A kick-off at hh:mm on the city's own clock, [dayOffset] days from
+    // today there. UK unless a city is given.
+    DateTime at(int dayOffset, int hour,
+        [int minute = 0, City city = City.cardiff]) {
+      final today = city.wallClock(now);
+      return city.instantAt(
+          today.year, today.month, today.day + dayOffset, hour, minute);
+    }
 
-    int daysToSaturday() => (DateTime.saturday - now.weekday) % 7;
+    int daysToSaturday() =>
+        (DateTime.saturday - City.cardiff.wallClock(now).weekday) % 7;
 
     Game game({
       required String id,
@@ -407,94 +464,94 @@ abstract final class FakeSeed {
         organiser: people[12],
         organiserGamesRun: 88,
       ),
-      // Swansea
+      // London
       game(
         id: 'g-301',
         format: GameFormat.fiveASide,
-        venue: swanseaBay,
-        pitch: 'Pitch 2',
+        venue: shoreditch,
+        pitch: 'Cage',
         startsAt: at(1, 19),
         tags: [GameTag.mixed],
-        pricePence: 700,
-        players: pick(1, 7),
-        organiser: people[3],
-        organiserGamesRun: 73,
+        pricePence: 900,
+        players: _from(londoners, 0, 7),
+        organiser: marcus,
+        organiserGamesRun: 81,
       ),
       game(
         id: 'g-302',
         format: GameFormat.fiveASide,
-        venue: swanseaBay,
+        venue: hackneyWick,
         pitch: 'Pitch 1',
         startsAt: at(daysToSaturday() == 0 ? 7 : daysToSaturday(), 11),
         tags: [GameTag.beginner, GameTag.womens, GameTag.casual],
-        pricePence: 500,
-        players: pick(22, 6),
-        organiser: people[24],
-        organiserGamesRun: 22,
+        pricePence: 700,
+        players: [londoners[0], londoners[3], londoners[5], londoners[8]],
+        organiser: chloe,
+        organiserGamesRun: 27,
       ),
       game(
         id: 'g-303',
         format: GameFormat.fiveASide,
-        venue: landore,
-        pitch: 'Cage',
+        venue: hackneyWick,
+        pitch: 'Pitch 2',
         startsAt: at(2, 20),
         tags: [GameTag.mixed],
-        pricePence: 600,
-        players: pick(7, 5),
-        organiser: people[3],
-        organiserGamesRun: 73,
+        pricePence: 900,
+        players: _from(londoners, 4, 9),
+        organiser: marcus,
+        organiserGamesRun: 81,
       ),
-      // Newport
+      // Nairobi (prices in Kenyan cents: 50000 = KSh 500)
       game(
         id: 'g-401',
         format: GameFormat.sevenASide,
-        venue: spytty,
+        venue: westlands,
         pitch: 'Pitch 1',
-        startsAt: at(1, 20),
+        startsAt: at(1, 19, 0, City.nairobi),
         tags: [GameTag.mixed],
-        pricePence: 650,
-        players: pick(11, 11),
-        organiser: people[9],
-        organiserGamesRun: 58,
+        pricePence: 50000,
+        players: _from(nairobians, 0, 10),
+        organiser: kevin,
+        organiserGamesRun: 46,
       ),
       game(
         id: 'g-402',
         format: GameFormat.fiveASide,
-        venue: riverside,
+        venue: kilimani,
         pitch: 'Cage',
-        startsAt: at(3, 11),
-        tags: [GameTag.beginner, GameTag.walking],
-        pricePence: 400,
-        players: pick(14, 8),
-        organiser: people[9],
-        organiserGamesRun: 58,
+        startsAt: at(3, 18, 0, City.nairobi),
+        tags: [GameTag.beginner, GameTag.casual],
+        pricePence: 40000,
+        players: _from(nairobians, 3, 6),
+        organiser: kevin,
+        organiserGamesRun: 46,
       ),
-      // Wrexham
+      // Tbilisi (prices in tetri: 1500 = 15 ₾)
       game(
         id: 'g-501',
         format: GameFormat.fiveASide,
-        venue: wrexham3g,
-        pitch: 'Pitch 3',
-        startsAt: at(2, 19, 30),
+        venue: vakePark,
+        pitch: 'Pitch 1',
+        startsAt: at(2, 20, 0, City.tbilisi),
         tags: [GameTag.mixed],
-        pricePence: 600,
-        players: pick(5, 8),
-        organiser: people[18],
-        organiserGamesRun: 39,
+        pricePence: 1500,
+        players: _from(tbilisians, 0, 8),
+        organiser: giorgi,
+        organiserGamesRun: 33,
       ),
       game(
         id: 'g-502',
         format: GameFormat.sevenASide,
-        venue: actonPark,
+        venue: saburtalo,
         pitch: 'Cage',
-        startsAt: at(4, 19),
+        startsAt: at(4, 20, 0, City.tbilisi),
         tags: [GameTag.mixed],
-        pricePence: 600,
-        players: pick(19, 9),
-        organiser: people[18],
-        organiserGamesRun: 39,
+        pricePence: 1500,
+        players: _from(tbilisians, 2, 9),
+        organiser: giorgi,
+        organiserGamesRun: 33,
       ),
-      // Bristol (first city outside Wales)
+      // Bristol
       game(
         id: 'g-201',
         format: GameFormat.fiveASide,

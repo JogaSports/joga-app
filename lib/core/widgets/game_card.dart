@@ -78,8 +78,8 @@ class GameCard extends StatelessWidget {
                       Headline(s.format(game.format), style: AppText.h2),
                       const SizedBox(height: Space.xxs),
                       Text(
-                        '${s.relativeDay(game.startsAt)} · '
-                        '${Format.time(game.startsAt)} · ${game.venue.name}',
+                        '${s.relativeDay(game.kickOff, now: game.city.clockNow())} · '
+                        '${Format.time(game.kickOff)} · ${game.venue.name}',
                         style: AppText.small.copyWith(
                           color: AppColors.textSecondary,
                         ),
@@ -106,7 +106,7 @@ class GameCard extends StatelessWidget {
                       const SizedBox(width: Space.sm),
                     ],
                     Text(
-                      Format.moneyShort(game.pricePence),
+                      Format.moneyShort(game.pricePence, game.currency),
                       style: AppText.h2,
                     ),
                   ],
@@ -149,15 +149,15 @@ class GameListTile extends StatelessWidget {
                       child: Headline(s.format(game.format), style: AppText.h3),
                     ),
                     Text(
-                      Format.moneyShort(game.pricePence),
+                      Format.moneyShort(game.pricePence, game.currency),
                       style: AppText.h3,
                     ),
                   ],
                 ),
                 const SizedBox(height: Space.xxs),
                 Text(
-                  '${s.relativeDay(game.startsAt)} · '
-                  '${Format.time(game.startsAt)}',
+                  '${s.relativeDay(game.kickOff, now: game.city.clockNow())} · '
+                  '${Format.time(game.kickOff)}',
                   style: AppText.smallStrong,
                 ),
                 Text(

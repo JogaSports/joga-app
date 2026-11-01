@@ -37,13 +37,13 @@ void main() {
         lastName: 'Jones',
         position: PlayerPosition.striker,
         foot: PreferredFoot.left,
-        city: City.swansea,
+        city: City.nairobi,
       ),
     );
     final me = await services.player.currentPlayer();
     expect(services.auth.status, AuthStatus.signedIn);
     expect(me.firstName, 'Gareth');
-    expect(me.city, City.swansea);
+    expect(me.city, City.nairobi);
     expect(me.position, PlayerPosition.striker);
   });
 

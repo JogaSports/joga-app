@@ -132,10 +132,11 @@ class _Kpis extends StatelessWidget {
       ),
     ];
     final money = [
-      StatTile(value: Format.moneyShort(data.revenuePence), label: 'Revenue'),
+      StatTile(
+          value: Format.moneyShort(data.revenuePence), label: 'Revenue (£)'),
       StatTile(
         value: Format.moneyShort(data.marginPence),
-        label: 'Margin',
+        label: 'Margin (£)',
         valueColor: data.marginPence >= 0 ? AppColors.lime : AppColors.danger,
       ),
     ];
@@ -181,8 +182,8 @@ class _GamesList extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        '${Format.relativeDay(row.game.startsAt)} '
-                        '${Format.time(row.game.startsAt)} · '
+                        '${Format.relativeDay(row.game.kickOff, now: row.game.city.clockNow())} '
+                        '${Format.time(row.game.kickOff)} · '
                         '${row.game.venue.name}',
                         style: AppText.bodyStrong,
                       ),
@@ -198,9 +199,10 @@ class _GamesList extends StatelessWidget {
                 const SizedBox(height: Space.sm),
                 Row(
                   children: [
-                    _Money('Revenue', row.revenuePence),
-                    _Money('Venue', row.venueCostPence),
-                    _Money('Margin', row.marginPence, emphasise: true),
+                    _Money('Revenue', row.revenuePence, row.game.currency),
+                    _Money('Venue', row.venueCostPence, row.game.currency),
+                    _Money('Margin', row.marginPence, row.game.currency,
+                        emphasise: true),
                   ],
                 ),
               ],
@@ -214,10 +216,12 @@ class _GamesList extends StatelessWidget {
 }
 
 class _Money extends StatelessWidget {
-  const _Money(this.label, this.pence, {this.emphasise = false});
+  const _Money(this.label, this.pence, this.currency,
+      {this.emphasise = false});
 
   final String label;
   final int pence;
+  final Currency currency;
   final bool emphasise;
 
   @override
@@ -233,7 +237,7 @@ class _Money extends StatelessWidget {
         children: [
           Text(label, style: AppText.tiny),
           Text(
-            Format.money(pence),
+            Format.money(pence, currency),
             style: AppText.smallStrong.copyWith(color: color),
           ),
         ],
@@ -293,17 +297,17 @@ class _GamesTable extends StatelessWidget {
             TableRow(
               children: [
                 cell(
-                  '${Format.relativeDay(row.game.startsAt)} '
-                  '${Format.time(row.game.startsAt)}',
+                  '${Format.relativeDay(row.game.kickOff, now: row.game.city.clockNow())} '
+                  '${Format.time(row.game.kickOff)}',
                 ),
                 cell(row.game.venue.name),
                 cell(row.game.venue.city.label),
                 cell(row.game.format.label),
                 cell('${row.game.booked}/${row.game.capacity}'),
-                cell(Format.money(row.revenuePence)),
-                cell(Format.money(row.venueCostPence)),
+                cell(Format.money(row.revenuePence, row.game.currency)),
+                cell(Format.money(row.venueCostPence, row.game.currency)),
                 cell(
-                  Format.money(row.marginPence),
+                  Format.money(row.marginPence, row.game.currency),
                   color:
                       row.marginPence >= 0 ? AppColors.lime : AppColors.danger,
                 ),

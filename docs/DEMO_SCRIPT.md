@@ -19,7 +19,9 @@ switches off automatically.
 
 ## 3. Finding a game (2 min)
 
-- **Find**: switch between Cardiff, Swansea, Newport and Wrexham.
+- **Find**: switch between Bristol, London, Cardiff, Nairobi and Tbilisi.
+  Nairobi prices show in shillings and Tbilisi in lari, with local kick-off
+  times.
 - Quick filters: beginner-friendly, women's, mixed, walking football.
 - Open a game: players list (report and block), venue access and safety
   (step-free, defibrillator, first aid), organiser, full price upfront.

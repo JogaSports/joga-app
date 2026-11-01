@@ -18,7 +18,9 @@ Agreed before the build. Change here first, then in code.
 | Space hold | 5 minutes while paying | `AppConfig.spaceHold` |
 | Cancellation | Free up to 24h before. After that, refunded only if the space is filled | `AppConfig.freeCancellation` |
 | Photos | Placeholder pitch graphics until venue photos exist | `PitchPhoto` |
-| Demo towns | Demo data covers Cardiff, Swansea, Newport and Wrexham, plus Bristol (marked as outside Wales). Launch towns still to confirm | `City`, `FakeSeed` |
+| Cities | **Bristol, London, Cardiff, Nairobi, Tbilisi** (PO, Oct 2026). Each has a timezone and currency | `City`, `FakeSeed` |
+| Money outside the UK | Prices in local currency (KES, GEL). Booking fee per city; Nairobi and Tbilisi fees are placeholders. Wallet is pounds, UK games only. Waiting on the PO (backend `docs/DECISIONS-NEEDED.md`) | `City.bookingFeeMinor`, `City.usesWallet` |
+| Time | Kick-offs shown on the city's clock. UK GMT/BST rule built in; Nairobi UTC+3 and Tbilisi UTC+4 all year | `City.wallClock` |
 | Language | **English only.** All copy in `core/l10n/strings_en.dart` | `core/l10n/` |
 | Sign-in | Apple, Google and email. Apple shown first (App Store rule) | `features/auth/` |
 | Age | **18+ only** for now, confirmed at sign-up | `email_auth_screen.dart` |

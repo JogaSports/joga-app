@@ -25,10 +25,38 @@ void main() {
     );
   });
 
-  test('every town in Wales has games to book', () async {
-    for (final city in City.values.where((c) => c.inWales)) {
+  test('every launch city has games to book', () async {
+    expect(City.values.map((c) => c.label),
+        ['Bristol', 'London', 'Cardiff', 'Nairobi', 'Tbilisi']);
+    for (final city in City.values) {
       final games = await services.games.findGames(GameFilter(city: city));
       expect(games, isNotEmpty, reason: city.label);
+    }
+  });
+
+  test('Nairobi games kick off at 7pm Nairobi time, priced in shillings',
+      () async {
+    final game = await services.games.getGame('g-401');
+    expect(game.city, City.nairobi);
+    expect(game.kickOff.hour, 19);
+    expect(game.currency, Currency.kes);
+
+    final quote = await services.bookings.quote('g-401');
+    expect(quote.currency, Currency.kes);
+    expect(quote.gamePence, 50000);
+    expect(quote.feePence, City.nairobi.bookingFeeMinor);
+    expect(quote.walletAvailablePence, 0,
+        reason: 'the wallet holds pounds, so it is UK only for now');
+  });
+
+  test('the price filter uses each city\'s own amount', () async {
+    for (final city in City.values) {
+      final cheap = await services.games.findGames(
+        GameFilter(city: city, maxPricePence: city.underPriceMinor - 1),
+      );
+      for (final g in cheap) {
+        expect(g.pricePence, lessThan(city.underPriceMinor), reason: g.id);
+      }
     }
   });
 

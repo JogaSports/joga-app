@@ -78,7 +78,7 @@ class EnStrings extends AppStrings {
   List<(String, String)> get welcomeSlides => const [
         (
           'Find a game\ntonight.',
-          'Organised 5 and 7-a-side across Wales. Book a space in seconds.',
+          'Organised 5 and 7-a-side near you. Book a space in seconds.',
         ),
         (
           'Every goal\ncounts.',
@@ -218,7 +218,7 @@ class EnStrings extends AppStrings {
   @override
   String get footLabel => 'Preferred foot';
   @override
-  String get homeCity => 'Home town or city';
+  String get homeCity => 'Home city';
   @override
   String stepOf(int step, int total) => 'Step $step of $total';
 
@@ -308,7 +308,7 @@ class EnStrings extends AppStrings {
   String get noGamesNearYou => 'No new games near you right now';
   @override
   String get noGamesNearYouBody =>
-      'New games are added every day. Try another town in Find.';
+      'New games are added every day. Try another city in Find.';
   @override
   String get membershipPromoTitle => '$_plus · no booking fees';
   @override
@@ -319,12 +319,12 @@ class EnStrings extends AppStrings {
   @override
   String get findTitle => 'Find your\nnext game';
   @override
-  String get underPrice => 'Under £7';
+  String underPrice(String price) => 'Under $price';
   @override
   String get noGamesMatch => 'No games match these filters';
   @override
   String get noGamesMatchBody =>
-      'Try another day or town, or clear your filters.';
+      'Try another day or city, or clear your filters.';
   @override
   String get clearFilters => 'Clear filters';
   @override
@@ -557,12 +557,17 @@ class EnStrings extends AppStrings {
   @override
   String get cancelRefund => "You'll get a full refund to your wallet.";
   @override
+  String get cancelRefundLocal => "You'll get a full refund.";
+  @override
   String get yesCancel => 'Yes, cancel';
   @override
   String get keepSpot => 'Keep my spot';
   @override
   String cancelledRefunded(String price) =>
       'Cancelled. $price is back in your wallet.';
+  @override
+  String cancelledRefundedLocal(String price) =>
+      "Cancelled. You'll get $price back.";
   @override
   String get cancelledIfFilled =>
       "Cancelled. You'll be refunded if your space is filled.";
@@ -698,8 +703,8 @@ class EnStrings extends AppStrings {
   String get impactTitle => 'Community\nimpact';
   @override
   String get impactSubtitle =>
-      'Grassroots participation across Wales, measured from real bookings '
-      'and attendance.';
+      'Grassroots participation in every Joga city, measured from real '
+      'bookings and attendance.';
   @override
   String get impactDemoBanner =>
       'Illustrative demo data. Live figures come from bookings once the app '
@@ -737,7 +742,7 @@ class EnStrings extends AppStrings {
   @override
   String get monthlyActiveTitle => 'Active players by month';
   @override
-  String get byTown => 'By town';
+  String get byTown => 'By city';
   @override
   String get inclusionTitle => 'Reach and inclusion';
   @override
@@ -761,8 +766,6 @@ class EnStrings extends AppStrings {
   @override
   String get privacyNote =>
       'All figures are aggregated. No individual player can be identified.';
-  @override
-  String get pilot => 'Pilot';
 
   // Presenter ---------------------------------------------------------------
   @override
