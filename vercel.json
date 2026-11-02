@@ -1,6 +1,6 @@
 {
     "framework": null,
     "installCommand": "git clone https://github.com/flutter/flutter.git --depth 1 -b 3.41.4 flutter && flutter/bin/flutter config --enable-web && flutter/bin/flutter precache --web",
-    "buildCommand": "flutter/bin/flutter pub get && flutter/bin/flutter build web --release --dart-define=USE_FAKE=${USE_FAKE:-true} --dart-define=SUPABASE_URL=${SUPABASE_URL:-} --dart-define=SUPABASE_PUBLISHABLE_KEY=${SUPABASE_PUBLISHABLE_KEY:-} --dart-define=ENV_LABEL=${ENV_LABEL:-STAGING}",
+    "buildCommand": "bash tool/vercel_build.sh",
     "outputDirectory": "build/web"
 }
