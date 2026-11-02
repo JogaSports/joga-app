@@ -154,21 +154,16 @@ class _Row extends StatelessWidget {
     required this.onTap,
     this.subtitle,
     this.icon,
-    this.selected,
   });
 
   final String title;
   final String? subtitle;
   final IconData? icon;
-
-  /// Non-null for a choice row: shows a tick when selected.
-  final bool? selected;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      selected: selected,
       button: true,
       child: InkWell(
         onTap: onTap,
@@ -195,13 +190,10 @@ class _Row extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (selected == true)
-                  const Icon(Icons.check_rounded, color: AppColors.lime)
-                else if (selected == null)
-                  const Icon(
-                    Icons.chevron_right_rounded,
-                    color: AppColors.textMuted,
-                  ),
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.textMuted,
+                ),
               ],
             ),
           ),

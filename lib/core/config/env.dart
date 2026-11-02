@@ -1,5 +1,5 @@
 /// Build-time settings, passed with `--dart-define` (or
-/// `--dart-define-from-file=env/<name>.json`).
+/// `--dart-define-from-file=env/NAME.json`).
 ///
 /// With nothing passed, the app runs as the demo on fake data. That's what
 /// the existing Vercel demo site builds, so it never touches a database.
@@ -11,7 +11,7 @@ abstract final class Env {
   /// True: demo data for Ray, no backend. False: real Supabase backend.
   static const useFake = bool.fromEnvironment('USE_FAKE', defaultValue: true);
 
-  /// Supabase project URL, e.g. https://<ref>.supabase.co
+  /// Supabase project URL, e.g. `https://PROJECT-REF.supabase.co`
   static const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
 
   /// The project's PUBLISHABLE key. Safe to ship in the app; never put the
