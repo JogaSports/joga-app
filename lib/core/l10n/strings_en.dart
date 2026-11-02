@@ -167,8 +167,27 @@ class EnStrings extends AppStrings {
         AuthError.cancelled => 'Sign-in was cancelled.',
         AuthError.network =>
           'No connection. Check your internet and try again.',
+        AuthError.weakPassword =>
+          'Choose a stronger password: at least 8 characters, and not one '
+              "you've used before.",
+        AuthError.tooManyAttempts =>
+          'Too many tries. Wait a few minutes, then try again.',
+        AuthError.notAvailable =>
+          'Apple and Google sign-in are coming soon. Use email for now.',
+        AuthError.unknown => 'Something went wrong. Please try again.',
       };
 
+  @override
+  String get newPasswordTitle => 'Choose a new\npassword';
+  @override
+  String get newPasswordBody =>
+      "You opened a reset link. Pick a new password and you're back in.";
+  @override
+  String get newPasswordLabel => 'New password';
+  @override
+  String get saveNewPassword => 'Save password';
+  @override
+  String get passwordUpdated => "Password updated. You're signed in.";
   @override
   String get forgotTitle => 'Reset your\npassword';
   @override

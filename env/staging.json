@@ -1,0 +1,6 @@
+{
+  "USE_FAKE": "false",
+  "SUPABASE_URL": "https://gpoebbanskcoztdqbebc.supabase.co",
+  "SUPABASE_PUBLISHABLE_KEY": "sb_publishable_EqjZcxSR2gggFm9s0_L3dw_WtYNsf6q",
+  "ENV_LABEL": "STAGING"
+}

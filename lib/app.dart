@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'core/config/app_config.dart';
+import 'core/config/env.dart';
 import 'core/di/app_scope.dart';
 import 'core/di/app_services.dart';
 import 'core/router/app_router.dart';
@@ -42,10 +43,21 @@ class _JogaAppState extends State<JogaApp> {
         scrollBehavior: const _AppScrollBehavior(),
         // On a laptop or projector the demo shows inside a phone frame
         // with a presenter panel. On a phone it's full screen as normal.
-        builder: (context, child) => PresenterFrame(
-          router: _router,
-          child: child ?? const SizedBox.shrink(),
-        ),
+        builder: (context, child) {
+          final app = PresenterFrame(
+            router: _router,
+            child: child ?? const SizedBox.shrink(),
+          );
+          // Real-backend builds carry a corner label ("STAGING") so nobody
+          // mistakes a test site for the live app.
+          if (Env.useFake || Env.label.isEmpty) return app;
+          return Banner(
+            message: Env.label,
+            location: BannerLocation.topEnd,
+            color: const Color(0xFFE8950C),
+            child: app,
+          );
+        },
       ),
     );
   }

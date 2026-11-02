@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.3.0 – Real backend, round 1
+
+- The app runs on the real Supabase backend when built with
+  `USE_FAKE=false` (`env/local.json`, `env/staging.json`). With no
+  settings it's still the demo on dummy data
+- Real accounts: email sign-up with a 6-digit code, sign-in, sign-out,
+  forgotten password (link opens a new "Choose a new password" screen),
+  profile set-up
+- Real data: Find, game details and players, booking with wallet credit,
+  cancelling, waitlist, My Games, Home, stats, streak, wallet, report and
+  block, leaderboards, referrals
+- Backend errors show as plain sentences ("This game is full…")
+- Not yet on the real backend: Apple and Google sign-in (say "coming
+  soon"), match control, admin and impact (say "coming in the next
+  update"), card payments, buying Joga+
+- Real-backend builds show a STAGING corner label and hide the demo tools
+- Vercel build reads `USE_FAKE`, `SUPABASE_URL`,
+  `SUPABASE_PUBLISHABLE_KEY` and `ENV_LABEL`, so one repo serves the demo
+  site and the staging site
+- Backend contract tests (`test/backend/`), run against local Supabase
+- New dependency: `supabase_flutter`
+
 ## 0.2.3 – Launch cities
 
 - Cities are now Bristol, London, Cardiff, Nairobi and Tbilisi, in that

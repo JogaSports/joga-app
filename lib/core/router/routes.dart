@@ -6,6 +6,7 @@ abstract final class Routes {
   static const authEmail = '/auth/email';
   static const forgotPassword = '/auth/forgot';
   static const verifyEmail = '/auth/verify';
+  static const newPassword = '/auth/new-password';
   static const profileSetup = '/setup/profile';
   static const permissions = '/setup/permissions';
 

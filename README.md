@@ -4,11 +4,15 @@ Find, book and play organised football, with stats, streaks and rewards.
 Launching in Bristol, London, Cardiff, Nairobi and Tbilisi. Football first;
 padel, badminton and other sports later.
 
-This repo is the **demo**: every screen of the MVP, a full sign-up and
-sign-in journey and a community impact dashboard, all
-running on dummy data for a player called **Ray**. There is no real backend,
-login or payment yet. The architecture is set up so real services slot in
-behind the same interfaces without touching the screens.
+One app, two ways to run it:
+
+| Build | Data | Where |
+|---|---|---|
+| **Demo** (default) | Dummy data for a player called **Ray**: every screen, nothing real | The demo Vercel site, pitches |
+| **Real backend** | The Supabase backend (`joga-backend`): real accounts, games, bookings | The staging Vercel site, local development |
+
+The screens are the same in both; only the services behind them change
+(`data/fake/` or `data/supabase/`).
 
 ---
 
@@ -29,8 +33,28 @@ flutter run                  # iOS simulator / Android emulator / device
 flutter build web --release  # output in build/web
 ```
 
-In VS Code, open the folder and use the **Joga (Chrome)** or
-**Joga (device / simulator)** launch configurations.
+In VS Code, pick a launch configuration: **Joga demo**, **Joga local
+backend** (needs `supabase start` in `joga-backend`) or **Joga staging
+backend**. From the terminal:
+
+```bash
+flutter run -d chrome                                          # demo data
+flutter run -d chrome --dart-define-from-file=env/local.json   # Supabase on your Mac
+flutter run -d chrome --dart-define-from-file=env/staging.json # joga-staging
+```
+
+### Backend contract tests
+
+Check the real-backend code against Supabase on your Mac:
+
+```bash
+cd ../joga-backend && supabase start && supabase db reset && cd ../joga-app
+flutter test test/backend --dart-define-from-file=env/local.json --dart-define=BACKEND_TESTS=true
+```
+
+They sign in as Ray, load every city, book and cancel with wallet credit,
+and sign up a new player using the code from the local inbox (Mailpit).
+In a plain `flutter test` they're skipped.
 
 On Windows, run the commands in `tool/setup.sh` one by one.
 
@@ -125,12 +149,22 @@ Screen (features/)  →  AppServices (core/di)  →  Repository interface (data/
   `google_sign_in`.
 - Wiring both to Supabase Auth is in `docs/BACKEND_PLAN.md`.
 
-## Going from demo to real
+## What's on the real backend
 
-1. Add `supabase_flutter`, `google_sign_in`, then write
-   `Supabase…Repository` classes for the interfaces in
-   `data/repositories/`.
-2. Add `AppServices.supabase()` and switch to it in `main.dart`.
+| Wired | Not yet |
+|---|---|
+| Email sign-up with a 6-digit code, sign-in, sign-out, password reset | Apple and Google sign-in (they say "coming soon") |
+| Profile set-up, Home, stats, streak, results | Match control, admin, impact (round 2) |
+| Find, game details, players, report and block | Card payments (wallet credit only; UK games) |
+| Booking, cancelling, waitlist, wallet, leaderboards, referrals | Buying Joga+ (needs the app stores) |
+
+Builds on the real backend show a corner label (**STAGING**) and hide the
+demo tools (presenter panel, "view app as").
+
+## Still to do before launch
+
+1. Apple and Google sign-in (`google_sign_in`, `sign_in_with_apple`).
+2. Card payments, once the PO decides how bookings are paid.
 3. Save settings with `shared_preferences`.
 4. Turn the "after test" features off in `core/config/feature_flags.dart`.
 5. Remove the presenter frame (return `child` in `PresenterFrame`),

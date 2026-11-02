@@ -241,6 +241,9 @@ class _Profile extends StatelessWidget {
             ),
           ],
         ),
+        // Demo tools: only on the fake-data demo. On a real backend, roles
+        // are set by an admin.
+        if (services.resetDemo != null) ...[
         SectionLabel(s.demoSection),
         Text(s.viewAppAs, style: AppText.small),
         const SizedBox(height: Space.sm),
@@ -268,6 +271,7 @@ class _Profile extends StatelessWidget {
           icon: Icons.grid_view_rounded,
           onPressed: () => context.push(Routes.demo),
         ),
+        ],
       ],
     );
   }

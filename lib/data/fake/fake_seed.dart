@@ -1,3 +1,4 @@
+import '../../core/config/app_config.dart';
 import '../models/models.dart';
 
 /// Dummy data for the demo. Everything here is made up.
@@ -724,12 +725,7 @@ abstract final class FakeSeed {
         ),
       ];
 
-  static const membershipBenefits = <String>[
-    'No booking fees on any game',
-    'Streak freeze once a month',
-    'Double milestone rewards',
-    'Early access to popular games',
-  ];
+  static const membershipBenefits = AppConfig.membershipBenefits;
 
   static const referrals = <ReferralEntry>[
     ReferralEntry(name: 'Sophie', stage: ReferralStage.rewarded),

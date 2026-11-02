@@ -14,6 +14,10 @@ enum AuthStatus {
 
   /// Fully signed in.
   signedIn,
+
+  /// Opened a password reset link: choose a new password before carrying
+  /// on.
+  needsNewPassword,
 }
 
 enum AuthError {
@@ -22,6 +26,12 @@ enum AuthError {
   invalidCode,
   cancelled,
   network,
+  weakPassword,
+  tooManyAttempts,
+
+  /// Apple and Google sign-in aren't set up on this build yet.
+  notAvailable,
+  unknown,
 }
 
 /// Thrown by [AuthRepository] methods. Screens turn [error] into a message.

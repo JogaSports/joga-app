@@ -6,6 +6,12 @@ abstract final class AppConfig {
 
   // Booking fees are per city (City.bookingFeeMinor), in local currency.
   static const membershipMonthlyPence = 499;
+  static const membershipBenefits = <String>[
+    'No booking fees on any game',
+    'Streak freeze once a month',
+    'Double milestone rewards',
+    'Early access to popular games',
+  ];
   static const referralRewardPence = 200;
 
   /// How long the last space is held while a player pays.

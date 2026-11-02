@@ -46,7 +46,10 @@ class PresenterFrame extends StatelessWidget {
         final wide = media.size.width >= _minWidth && media.size.height >= 560;
         if (!wide || !settings.phoneFrame) return app;
 
-        final showPanel = media.size.width >= _panelWidth;
+        // The presenter panel (jump-to, reset) is for the fake-data demo
+        // only. Real-backend builds keep the phone frame without it.
+        final demo = context.services.resetDemo != null;
+        final showPanel = demo && media.size.width >= _panelWidth;
         return ColoredBox(
           color: const Color(0xFF050605),
           child: Stack(
@@ -89,7 +92,7 @@ class PresenterFrame extends StatelessWidget {
                   if (showPanel) const SizedBox(width: 340),
                 ],
               ),
-              if (!showPanel)
+              if (demo && !showPanel)
                 Positioned(
                   top: Space.lg,
                   left: Space.lg,

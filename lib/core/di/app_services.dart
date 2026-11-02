@@ -17,9 +17,9 @@ import '../settings/app_settings.dart';
 
 /// Every repository the app uses, in one place.
 ///
-/// Screens only ever talk to these interfaces. To move from dummy data to
-/// the real backend, add an `AppServices.supabase()` factory that builds
-/// Supabase implementations, and switch to it in `main.dart`.
+/// Screens only ever talk to these interfaces. [AppServices.fake] runs the
+/// demo on dummy data; `buildSupabaseServices()` (data/supabase/) builds the
+/// real-backend versions. `main.dart` picks one from `Env.useFake`.
 class AppServices {
   AppServices({
     required this.auth,

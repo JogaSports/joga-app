@@ -1,7 +1,7 @@
 name: joga_sports
 description: Joga Sports – find, book and play organised football, with stats, streaks and rewards.
 publish_to: 'none'
-version: 0.2.3+3
+version: 0.3.0+4
 
 environment:
   sdk: ^3.6.0
@@ -15,6 +15,8 @@ dependencies:
   # Range so pub picks the newest version your Flutter supports (8.2 needs
   # Flutter 3.44+). The button API is the same across these versions.
   sign_in_with_apple: '>=6.1.0 <9.0.0'
+  # Real backend (auth, database). Used when USE_FAKE=false.
+  supabase_flutter: ^2.18.0
 
 dev_dependencies:
   flutter_test:

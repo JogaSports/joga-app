@@ -98,6 +98,12 @@ class FakeAuthRepository implements AuthRepository {
   Future<void> sendPasswordReset(String email) => _db.wait();
 
   @override
+  Future<void> setNewPassword(String password) async {
+    await _db.wait();
+    _set(AuthStatus.signedIn);
+  }
+
+  @override
   Future<void> completeProfile(ProfileSetup profile) async {
     await _db.wait();
     _db.me = _db.me.copyWith(

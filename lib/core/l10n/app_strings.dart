@@ -73,6 +73,12 @@ abstract class AppStrings {
   String get mustAgreeConduct;
   String authError(AuthError error);
 
+  String get newPasswordTitle;
+  String get newPasswordBody;
+  String get newPasswordLabel;
+  String get saveNewPassword;
+  String get passwordUpdated;
+
   String get forgotTitle;
   String get forgotBody;
   String get sendResetLink;

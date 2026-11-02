@@ -5,6 +5,7 @@ import '../../data/models/models.dart';
 import '../../features/admin/admin_screen.dart';
 import '../../features/auth/email_auth_screen.dart';
 import '../../features/auth/forgot_password_screen.dart';
+import '../../features/auth/new_password_screen.dart';
 import '../../features/auth/permissions_screen.dart';
 import '../../features/auth/profile_setup_screen.dart';
 import '../../features/auth/sign_in_screen.dart';
@@ -76,6 +77,10 @@ GoRouter buildRouter({
       GoRoute(
         path: Routes.verifyEmail,
         builder: (context, state) => const VerifyEmailScreen(),
+      ),
+      GoRoute(
+        path: Routes.newPassword,
+        builder: (context, state) => const NewPasswordScreen(),
       ),
       GoRoute(
         path: Routes.profileSetup,
@@ -181,7 +186,11 @@ String? _redirect(AppServices services, GoRouterState state) {
       location == Routes.profileSetup ? null : Routes.profileSetup,
     // Profile setup and permissions stay reachable for a moment after
     // sign-up finishes, so the journey isn't cut short.
-    AuthStatus.signedIn => signedOutOnly ? Routes.home : null,
+    AuthStatus.signedIn => signedOutOnly || location == Routes.newPassword
+        ? Routes.home
+        : null,
+    AuthStatus.needsNewPassword =>
+      location == Routes.newPassword ? null : Routes.newPassword,
   };
 }
 

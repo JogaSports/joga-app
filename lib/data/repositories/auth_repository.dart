@@ -37,6 +37,9 @@ abstract interface class AuthRepository {
   Future<void> resendCode();
   Future<void> sendPasswordReset(String email);
 
+  /// After opening a reset link ([AuthStatus.needsNewPassword]).
+  Future<void> setNewPassword(String password);
+
   /// Saves the new player's profile and finishes sign-up.
   Future<void> completeProfile(ProfileSetup profile);
 
